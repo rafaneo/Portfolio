@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/bootstrap-grid.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script src="{% static 'portfolio/js/scripts/scripts.js' %}"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block title %}
+    <title>Main - Rafael's Portfolio</title>
+  {% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'mainpage' %}">
+      <svg width="54" height="54" viewBox="0 0 64 64">
+        <text x="15" y="55" font-size="3em" font-family="Bodoni Moda">R</text>
+      </svg>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'education' %}">Education</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'experience' %}">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'projects' %}">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'other' %}">Other Qualifications</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'curiculum_vitae' %}">Curiculum Vitae</a>
+        </li>
+        <li class="nav-item ms-5 fw-bold">
+          <a class="nav-link" href="blog">Blog</a>
+        </li>
+        {% if user.is_admin %}
+          <li class="nav-item ms-1 fw-bold">
+            <a class="nav-link" href="post">Post</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  {% block content %}
+  {% endblock %}
+</body>
+
+</html>

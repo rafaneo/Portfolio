@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "autoprefixer": "^9.8.0",
+    "bootstrap": "^3.4.1",
+    "typed.js": "^2.0.12"
+  },
+  "name": "portfolio",
+  "version": "1.0.0",
+  "source": "main.js",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.2",
+    "gulp": "^4.0.2",
+    "node-sass": "^8.0.0",
+    "parcel": "^2.8.2"
+  },
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": ""
+}

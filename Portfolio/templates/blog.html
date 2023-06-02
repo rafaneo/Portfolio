@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%} <title>Main - Rafael's Portfolio</title>{% endblock %}
+
+{% block content %}
+
+    <div class="ms-15-4 mt-5">
+        <p class="display-8">Posts</p>
+    </div>
+    {% for post in posts %}
+    <div class="container post-card mt-7-1">
+            <a class="text-center no-underline">{{ post.title }}</a>
+    </div>
+    {% endfor %}
+{% endblock %}

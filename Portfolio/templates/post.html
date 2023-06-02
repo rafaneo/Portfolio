@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%} <title>Main - Rafael's Portfolio</title>{% endblock %}
+
+{% block content %}
+
+
+    <form method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        <div class="ms-5 mt-5">
+           <p class="d-inline mx-5 display-10 fw-bold">Title </p> 
+           
+           <div class="d-inline ms-5">
+                {{ form.title }} 
+           </div>
+        </div>
+        <div class="ms-5 mt-3">
+            <p class="d-inline mx-5 display-10 fw-bold">Category </p> {{ form.category }}             
+        </div>
+        <div class="ms-5 mt-3">
+            <p class="d-inline mx-5 display-10 fw-bold">Tags</p>
+            <div class="d-inline ms-5">
+                {{ form.title_tag }}   
+            </div>          
+        </div>
+        <div class="ms-5 mt-3">
+            <p class="d-inline mx-5 display-10 fw-bold">Author</p>
+            <div class="d-inline ms-4">
+                {{ form.author }}   
+            </div>          
+        </div>
+        <div class="ms-5 mt-3">
+            <p class="mx-5 display-10 fw-bold">Content</p>
+            <div class="d-inline ms-4">
+                {{ form.article }}   
+            </div>          
+        </div>
+        <input class="" type="submit" value="Submit">
+    </form>
+
+{% endblock %}
