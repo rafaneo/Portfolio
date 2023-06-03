@@ -552,7 +552,7 @@
     max-height: 400px;
     overflow: hidden;
     transition: 0.3s;
-    background-color: rgba(86, 74, 139, 0.548);
+    background-color: rgba(127, 113, 189, 0.829);
     padding-bottom: 15px;
 }
   
@@ -594,3 +594,4 @@
     background-color: rgb(156, 151, 180);
     border-radius: 5px;
 }
+
