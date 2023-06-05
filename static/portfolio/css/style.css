@@ -595,3 +595,8 @@
     border-radius: 5px;
 }
 
+
+.bg-nav{ 
+    background-color: rgba(0, 0, 0, 0.0);
+}
+

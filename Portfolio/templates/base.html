@@ -15,40 +15,51 @@
   {% endblock %}
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'mainpage' %}">
-      <svg width="54" height="54" viewBox="0 0 64 64">
-        <text x="15" y="55" font-size="3em" font-family="Bodoni Moda">R</text>
-      </svg>
-    </a>
-    <div class=" display-10 fw-bold" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'education' %}">Education</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'experience' %}">Experience</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'projects' %}">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'other' %}">Other Qualifications</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'curiculum_vitae' %}">Curiculum Vitae</a>
-        </li>
-        <li class="nav-item ms-5 fw-bold">
-          <a class="nav-link" href="blog">Blog</a>
-        </li>
-        {% if user.is_admin %}
-          <li class="nav-item ms-1 fw-bold">
-            <a class="nav-link" href="post">Post</a>
+
+    <nav style="z-index:1" class="overflow-visible navbar navbar-expand-lg navbar-light bg-nav wrapper">
+      <a class="navbar-brand" href="{% url 'mainpage' %}">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <text x="15" y="55" font-size="3em" font-family="Bodoni Moda">R</text>
+        </svg>
+      </a>
+      <div class=" display-10 fw-bold" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'education' %}">Education</a>
           </li>
-        {% endif %}
-      </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'experience' %}">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'projects' %}">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'other' %}">Other Qualifications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'curiculum_vitae' %}">Curiculum Vitae</a>
+          </li>
+          <li class="nav-item ms-5 fw-bold">
+            <a class="nav-link" href="blog">Blog</a>
+          </li>
+          {% if user.is_admin %}
+            <li class="nav-item ms-1 fw-bold">
+              <a class="nav-link" href="post">Post</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <div class="d-flex justify-content-end mx-4">
+      <object data="{% static 'portfolio/svg/name.svg' %}"></object>
     </div>
-  </nav>
+    <svg style="z-index:-1;"class="overflow-visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 305 1450 10" >
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:rgb(71,75,255);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgb(162,0,255);stop-opacity:1" />
+      </linearGradient>
+        <path class="gradient" fill="url(#gradient)" fill-opacity="1" fill="#0099ff" fill-opacity="1" d="M -16 320 C 41 277 75 277 154 301 C 237 305 292 237 326 271 C 403 335 351 265 493 283 C 599 306 601 253 655 284 C 721 336 753 284 790 296 C 903 309 902 268 1003 289 C 1090 328 1177 230 1245 281 C 1339 357 1439 269 1466 320 C 1427.7 320 1415 320 1403 320 C 1390.8 320 1378 320 1366 320 C 1353.8 320 1342 320 1329 320 C 1316.9 320 1305 320 1292 320 C 1280 320 1268 320 1255 320 C 1243.1 320 1231 320 1218 320 C 1206.2 320 1194 320 1182 320 C 1169.2 320 1157 320 1145 320 C 1132.3 320 1120 320 1108 320 C 1095.4 320 1083 320 1071 320 C 1058.5 320 1046 320 1034 320 C 1021.5 320 1009 320 997 320 C 984.6 320 972 320 960 320 C 947.7 320 935 320 923 320 C 910.8 320 898 320 886 320 C 873.8 320 862 320 849 320 C 836.9 320 825 320 812 320 C 800 320 788 320 775 320 C 763.1 320 751 320 738 320 C 726.2 320 714 320 702 320 C 689.2 320 677 320 665 320 C 652.3 320 640 320 628 320 C 615.4 320 603 320 591 320 C 578.5 320 566 320 554 320 C 541.5 320 529 320 517 320 C 504.6 320 492 320 480 320 C 467.7 320 455 320 443 320 C 430.8 320 418 320 406 320 C 393.8 320 382 320 369 320 C 356.9 320 345 320 332 320 C 320 320 308 320 295 320 C 283.1 320 271 320 258 320 C 246.2 320 234 320 222 320 C 209.2 320 197 320 185 320 C 172.3 320 160 320 148 320 C 135.4 320 123 320 111 320 C 98.5 320 86 320 74 320 C 61.5 320 49 320 37 320 Z"></path>
+    </svg>
   {% block content %}
   {% endblock %}
 </body>

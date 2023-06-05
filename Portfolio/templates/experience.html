@@ -13,9 +13,8 @@
     <div class="text-center display-8"style="color: #c061cb;">
         START
     </div>
-
     {% for company in companies%}
-    <div class="experience">
+    <div class="experience page-bg">
         <div class="timeline">
             {% if company.id|modulo:2 == 0 %}
                 <div class="container right">
