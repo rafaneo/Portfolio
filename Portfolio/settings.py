@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mainapp',
     'bootstrap5',
     'ckeditor',
+    'rest_framework',
 ]
 
 CKEDITOR_CONFIGS = {
@@ -59,6 +60,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 ROOT_URLCONF = "Portfolio.urls"
 

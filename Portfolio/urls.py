@@ -28,6 +28,12 @@ from mainapp.views import (
     Projects,
     Other,
 )
+
+from mainapp.api.api import(
+    InitializeInstance,
+)
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('' ,  Main.as_view(), name="mainpage"),
@@ -38,4 +44,5 @@ urlpatterns = [
     path('curiculum_vitae', CuriculumVitae.as_view(), name="curiculum_vitae"),
     path('post', Article.as_view(),name="post" ),
     path('blog', BlogView.as_view(),name="blog" ),
+    path('endpoint', InitializeInstance.as_view(), name="end_point"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -576,12 +576,6 @@
     height: 50%;
 }
 
-.footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Additional styling for the footer */
-}
 
 .dot-style{ 
     display:inline-block;
@@ -600,3 +594,7 @@
     background-color: rgba(0, 0, 0, 0.0);
 }
 
+
+.pos{ 
+    position: fixed;
+}
