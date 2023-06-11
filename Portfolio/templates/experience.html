@@ -5,57 +5,104 @@
 {% block content %}
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/experience.css' %}" />
+{% if request.user_agent.is_mobile %}
+    <link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/experience-mob.css' %}" />
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/experience.css' %}" />
+{% endif %}
 
-<div class="mt-9-1">
-    <p class="text-center display-4 fw-bold text-purple-2">
-        <svg width="64px" height="64px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>work-case-filled</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="work-case" fill="#000000" transform="translate(42.666667, 64.000000)"> <path d="M1.20792265e-13,197.76 C54.5835501,218.995667 112.186031,231.452204 170.666667,234.666667 L170.666667,277.333333 L256,277.333333 L256,234.666667 C314.339546,231.013 371.833936,218.86731 426.666667,198.613333 L426.666667,362.666667 L1.20792265e-13,362.666667 L1.20792265e-13,197.76 Z M277.333333,-1.42108547e-14 L298.666667,21.3333333 L298.666667,64 L426.666667,64 L426.666667,175.146667 C361.254942,199.569074 292.110481,212.488551 222.293333,213.333333 L222.293333,213.333333 L206.933333,213.333333 C136.179047,212.568604 66.119345,199.278929 7.10542736e-15,174.08 L7.10542736e-15,174.08 L7.10542736e-15,64 L128,64 L128,21.3333333 L149.333333,-1.42108547e-14 L277.333333,-1.42108547e-14 Z M256,42.6666667 L170.666667,42.6666667 L170.666667,64 L256,64 L256,42.6666667 Z" id="Combined-Shape-Copy"> </path> </g> </g> </g></svg>
-        Experience
-    </p>
-</div>
+
+{% if request.user_agent.is_mobile %}
+    <div class="mt-5">
+        <p class="text-center display-4 fw-bold text-purple-2">
+            <svg width="64px" height="64px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>work-case-filled</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="work-case" fill="#000000" transform="translate(42.666667, 64.000000)"> <path d="M1.20792265e-13,197.76 C54.5835501,218.995667 112.186031,231.452204 170.666667,234.666667 L170.666667,277.333333 L256,277.333333 L256,234.666667 C314.339546,231.013 371.833936,218.86731 426.666667,198.613333 L426.666667,362.666667 L1.20792265e-13,362.666667 L1.20792265e-13,197.76 Z M277.333333,-1.42108547e-14 L298.666667,21.3333333 L298.666667,64 L426.666667,64 L426.666667,175.146667 C361.254942,199.569074 292.110481,212.488551 222.293333,213.333333 L222.293333,213.333333 L206.933333,213.333333 C136.179047,212.568604 66.119345,199.278929 7.10542736e-15,174.08 L7.10542736e-15,174.08 L7.10542736e-15,64 L128,64 L128,21.3333333 L149.333333,-1.42108547e-14 L277.333333,-1.42108547e-14 Z M256,42.6666667 L170.666667,42.6666667 L170.666667,64 L256,64 L256,42.6666667 Z" id="Combined-Shape-Copy"> </path> </g> </g> </g></svg>
+            Experience
+        </p>
+    </div>
+{% else %}
+    <div class="mt-9-1">
+        <p class="text-center display-4 fw-bold text-purple-2">
+            <svg width="64px" height="64px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>work-case-filled</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="work-case" fill="#000000" transform="translate(42.666667, 64.000000)"> <path d="M1.20792265e-13,197.76 C54.5835501,218.995667 112.186031,231.452204 170.666667,234.666667 L170.666667,277.333333 L256,277.333333 L256,234.666667 C314.339546,231.013 371.833936,218.86731 426.666667,198.613333 L426.666667,362.666667 L1.20792265e-13,362.666667 L1.20792265e-13,197.76 Z M277.333333,-1.42108547e-14 L298.666667,21.3333333 L298.666667,64 L426.666667,64 L426.666667,175.146667 C361.254942,199.569074 292.110481,212.488551 222.293333,213.333333 L222.293333,213.333333 L206.933333,213.333333 C136.179047,212.568604 66.119345,199.278929 7.10542736e-15,174.08 L7.10542736e-15,174.08 L7.10542736e-15,64 L128,64 L128,21.3333333 L149.333333,-1.42108547e-14 L277.333333,-1.42108547e-14 Z M256,42.6666667 L170.666667,42.6666667 L170.666667,64 L256,64 L256,42.6666667 Z" id="Combined-Shape-Copy"> </path> </g> </g> </g></svg>
+            Experience
+        </p>
+    </div>
+{% endif %}
+
+
     <div class="text-center display-8"style="color: #c061cb;">
         START
     </div>
-    {% for company in companies%}
-    <div class="experience page-bg">
-        <div class="timeline">
-            {% if company.id|modulo:2 == 0 %}
-                <div class="container right">
-            {% else %}
-                <div class="container left">
-            {% endif %}
-                    <div class="card">
-                        <div class="card-front">
-                           <div class="tag">
-                                <p class="display-8 fw-bold">{{ company.name }}</p>
+    {% if request.user_agent.is_mobile %}
+        {% for company in companies%}
+        <div class="experience page-bg">
+            <div class="timeline">
+                {% if company.id|modulo:2 == 0 %}
+                    <div class="container right">
+                {% else %}
+                    <div class="container left">
+                {% endif %}
+                        <div class="card">
+                            <div class="card-front">
+                            <div class="tag">
+                                    <p class="display-12 fw-bold">{{ company.name }}</p>
+                                </div>
+                                <div class="desc">
+                                    <p class="display-13">{{ company.position }}</p>
+                                </div>
                             </div>
-                            <div class="desc">
-                                    <p class="display-10">{{ company.position }}</p>
-                                {% if not company.finish %}
-                                    <p>{{ company.start }} - Present</p>
-                                {% else %}
-                                    <p>{{ company.start }} - {{ company.finish }}</p>
-                                {% endif %}
+                            <div class="card-back large-gap">
+                                <div class="tag-flipped">
+                                        <p class="display-15">For more info visit through Desktop</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-back large-gap">
-                            <div class="tag-flipped">
-                            {% if company.description%}
-                                <div class="desc-flipped">
-                                    <p class="display-15">{{ company.description|linebreaks }}
-                                </div>
-                            {% endif %}
-                             </div>
-                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        {% for company in companies%}
+        <div class="experience page-bg">
+            <div class="timeline">
+                {% if company.id|modulo:2 == 0 %}
+                    <div class="container right">
+                {% else %}
+                    <div class="container left">
+                {% endif %}
+                        <div class="card">
+                            <div class="card-front">
+                            <div class="tag">
+                                    <p class="display-8 fw-bold">{{ company.name }}</p>
+                                </div>
+                                <div class="desc">
+                                        <p class="display-10">{{ company.position }}</p>
+                                    {% if not company.finish %}
+                                        <p>{{ company.start }} - Present</p>
+                                    {% else %}
+                                        <p>{{ company.start }} - {{ company.finish }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-back large-gap">
+                                <div class="tag-flipped">
+                                {% if company.description%}
+                                    <div class="desc-flipped">
+                                        <p class="display-15">{{ company.description|linebreaks }}</p>
+                                    </div>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
     <div class="mt-5-1 mb-5 text-center ball">
         <i class="fa-sharp fa-solid fa-circle fa-2xl" style="color: #c061cb;"></i>
-
     </div>
 
 <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>

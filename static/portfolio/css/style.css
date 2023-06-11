@@ -383,6 +383,50 @@
 }
 }
 
+.display-11 {
+    font-size: calc(1.175rem + 0vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+@media (min-width: 1200px) {
+    .display-11 {
+      font-size: 1rem;
+}
+}
+
+.display-12 {
+    font-size: calc(1.175rem + 0vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+@media (min-width: 1200px) {
+    .display-12 {
+      font-size: 0.8rem;
+}
+}
+
+.display-13 {
+    font-size: calc(1.175rem + 0vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+@media (min-width: 1200px) {
+    .display-13 {
+      font-size: 0.6rem;
+}
+}
+
+.display-14 {
+    font-size: calc(1.175rem + 0vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+@media (min-width: 1200px) {
+    .display-14 {
+      font-size: 0.4rem;
+}
+}
+
 
 .display-1-raw {
     font-size: calc(1.625rem + 4.5vw);
@@ -548,8 +592,14 @@
 
 .card-1{
     box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
-    max-width: 1000px;
-    max-height: 400px;
+    overflow: hidden;
+    transition: 0.3s;
+    background-color: rgba(127, 113, 189, 0.829);
+    padding-bottom: 15px;
+}
+
+.card-2{
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
     overflow: hidden;
     transition: 0.3s;
     background-color: rgba(127, 113, 189, 0.829);
@@ -597,4 +647,10 @@
 
 .pos{ 
     position: fixed;
+}
+
+
+.img-mob{ 
+    height: 100%;
+    width: 60%;
 }

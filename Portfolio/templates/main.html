@@ -4,50 +4,60 @@
 {% block title%} <title>Main - Rafael's Portfolio</title>{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'portfolio/css/main.css' %}" />
-
-<div class="gradient wrapper"> 
-    <div class="container">
-        <div class="row mt-5 ">
-            <div class="col-md-4 img-fluid">
-                <img class="circle zoom img-fluid" src="{% static 'portfolio/images/profile.png' %}" alt="profile">
-            </div>
-            <div class="col">
-                <div class="display-2-raw fw-bold line-height-9 text-light-purple-1">
-                    <p>Hello,</p>
-                    <p>I am Rafael!</p>
+<div>
+    <div class="gradient wrapper"> 
+        <div class="container">
+            <div class="row mt-5">
+                {% if request.user_agent.is_mobile%}
+                    <div class="col-sm-4 mt-5">
+                        <img class="d-flex justify-content-center img-mob circle zoom" src="{% static 'portfolio/images/profile.png' %}" alt="profile">
+                    </div>    
+                {% else %}
+                    <div class="col-sm-4">
+                        <img class="circle zoom" src="{% static 'portfolio/images/profile.png' %}" alt="profile">
+                    </div>
+                {% endif %}
+                <div class="col">
+                    <div class="display-2-raw fw-bold line-height-9 text-light-purple-1">
+                        <p>Hello,</p>
+                        <p>I am Rafael!</p>
+                    </div>
+                    <div class="display-9 line-height-10x fw-bold text-light-purple-2">
+                        <p>Currently a student at
+                            <a class="underline text-light-purple-2" href="https://www.cut.ac.cy/">Cyprus University of
+                                technology,</a>
+                            &nbsp;studying Computer engineering and Informatics!
+                        </p>
+                    </div>
+                    <p class="display-8 fw-bold text-light-purple-1">I do <span class="typing-text"></span></p>
                 </div>
-                <div class="display-9 line-height-10x fw-bold text-light-purple-2">
-                    <p>Currently a student at
-                        <a class="underline text-light-purple-2" href="https://www.cut.ac.cy/">Cyprus University of
-                            technology,</a>
-                        &nbsp;studying Computer engineering and Informatics!
-                    </p>
-                </div>
-                <p class="display-8 fw-bold text-light-purple-1">I do <span class="typing-text"></span></p>
             </div>
         </div>
     </div>
-</div>
-</div>
-<div class="wrapper mt-auto">
-    <svg class="overflow-visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 130">
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:rgb(71,75,255);stop-opacity:1" />
-            <stop offset="100%" style="stop-color:rgb(162,0,255);stop-opacity:1" />
-        </linearGradient>
-        <path class="gradient" fill="url(#gradient)" fill-opacity="1" d="M0,96L30,85.3C60,75,120,53,180,48C240,43,300,53,360,74.7C420,96,480,128,540,144C600,160,660,160,720,181.3C780,203,840,245,900,229.3C960,213,1020,139,1080,138.7C1140,139,1200,213,1260,224C1320,235,1380,181,1410,154.7L1440,128L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
-    </svg>
+    </div>
+    <div class="wrapper">
+        <svg class="overflow-visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 130">
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgb(71,75,255);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:rgb(162,0,255);stop-opacity:1" />
+            </linearGradient>
+            <path class="gradient" fill="url(#gradient)" fill-opacity="1" d="M0,96L30,85.3C60,75,120,53,180,48C240,43,300,53,360,74.7C420,96,480,128,540,144C600,160,660,160,720,181.3C780,203,840,245,900,229.3C960,213,1020,139,1080,138.7C1140,139,1200,213,1260,224C1320,235,1380,181,1410,154.7L1440,128L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+        </svg>
+    </div>
+
+    <div class="text-center mt-5">
+        <div class="display-9 fw-bold">
+                <p style="color:#21f5f5">Lets chat! <i class="fa-regular fa-comment"></i></p>
+        </div>
+        <div>
+            <a class="no-underline" style="color: #21cfcf" href="rafailmaximos@hotmail.com">rafailmaximos@hotmail.com <i class="fa-regular fa-envelope-open fa-lg"></i></a><br>
+            <a class="no-underline" style="color: #21cfcf" href="https://www.linkedin.com/in/rafael-neokleous-950811170/">LinkedIn <i class="fa-brands fa-linkedin fa-lg"></i></a><br>
+            <a class="no-underline" style="color: #21cfcf" href="https://github.com/rafaneo">GitHub <i class="fa-brands fa-github fa-lg"></i></a><br>
+        </div>
+
+    </div>
 </div>
 
-<div class="text-center mt-auto mb-3">
-    <div class="display-9 fw-bold">
-            <p style="color:#21f5f5">Lets chat! <i class="fa-regular fa-comment"></i></p>
-    </div>
-        <a class="no-underline" style="color: #21cfcf" href="rafailmaximos@hotmail.com">rafailmaximos@hotmail.com <i class="fa-regular fa-envelope-open fa-lg"></i></a><br>
-        <a class="no-underline" style="color: #21cfcf" href="https://www.linkedin.com/in/rafael-neokleous-950811170/">LinkedIn <i class="fa-brands fa-linkedin fa-lg"></i></a><br>
-        <a class="no-underline" style="color: #21cfcf" href="https://github.com/rafaneo">GitHub <i class="fa-brands fa-github fa-lg"></i></a><br>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"
     integrity="sha512-1KbKusm/hAtkX5FScVR5G36wodIMnVd/aP04af06iyQTkD17szAMGNmxfNH+tEuFp3Og/P5G32L1qEC47CZbUQ=="

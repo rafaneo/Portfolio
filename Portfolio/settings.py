@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'bootstrap5',
     'ckeditor',
     'rest_framework',
+    'django_user_agents',
 ]
+
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_user_agents.middleware.UserAgentMiddleware"
 ]
 
 REST_FRAMEWORK = {

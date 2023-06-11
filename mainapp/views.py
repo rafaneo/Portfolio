@@ -19,6 +19,7 @@ class Main(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
+        is_device = self.request.user_agent.is_mobile 
         context['user'] = user
         return context
     
