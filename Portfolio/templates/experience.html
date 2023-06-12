@@ -27,10 +27,11 @@
         </p>
     </div>
 {% endif %}
-
-
-    <div class="text-center display-8"style="color: #c061cb;">
+    <div class="text-center display-8-raw"style="color: #c061cb;">
         START
+    </div>
+    <div class="text-center ball">
+        <i class="fa-sharp fa-solid fa-circle fa-2xl" style="color: #c061cb;"></i>
     </div>
     {% if request.user_agent.is_mobile %}
         {% for company in companies%}
@@ -101,10 +102,10 @@
         </div>
         {% endfor %}
     {% endif %}
-    <div class="mt-5-1 mb-5 text-center ball">
+    <div class="mb-5 text-center ball">
         <i class="fa-sharp fa-solid fa-circle fa-2xl" style="color: #c061cb;"></i>
     </div>
-
+    <br><br><br><br>
 <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 <script>
     const srtop = ScrollReveal({
