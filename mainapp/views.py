@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.shortcuts import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView, ListView, FormView, View
 
@@ -6,8 +6,10 @@ from mainapp.models import (
     School,
     Subject,
     Company,
+    Project,
     User,
     Post,
+    Qualifications,
 )
 from mainapp.forms import(
     ArticleForm,
@@ -69,9 +71,54 @@ class BlogView(ListView):
         context['posts'] = Post.objects.all()
         return context
 
-class Projects(TemplateView):
+class Projects(ListView):
+    model = Project
     template_name = 'projects.html'
+    context_object_name = 'projects'
+    
+        
+class ProjectDisplay(TemplateView):
+    model = Project
+    template_name = 'project.html'
 
-class Other(TemplateView):
-    template_name = 'other.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        pk = context['pk']
+        project = Project.objects.get(pk=pk)
+        context['project'] = project
+
+        return context
+
+    def get(self, request, *argv, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        project = context['project']
+        if not project.public:
+            print("here")
+            return redirect(reverse('no_permissions'))
+        else:
+            return self.render_to_response(context)
+        
+        
+
+
+class NoPermissions(TemplateView):
+    template_name = 'errors/no-permissions.html'
+
+class Qualifications(TemplateView):
+    template_name = 'qualifications.html'
+    model = Qualifications 
+
+
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)
+        qualifications = self.model.objects.all()
+        
+        context['qualifications'] = qualifications
+        
+        return context
+
+
     

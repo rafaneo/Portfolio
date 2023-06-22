@@ -549,6 +549,34 @@
     line-height: 2;
 }
 
+.h-10{ 
+    height: 10% !important;
+}
+
+.h-15{ 
+    height: 15% !important;
+}
+
+.h-20{ 
+    height: 20% !important;
+}
+
+.h-30 {
+    height: 30% !important;
+}
+
+.h-35 {
+    height: 35% !important;
+}
+
+.h-40 {
+    height: 40% !important;
+}
+
+.h-45 {
+    height: 45% !important;
+}
+
 .circle { 
     height: 350px;
     width: 350px;
@@ -659,6 +687,10 @@
     border-radius: 5px;
 }
 
+.project-card{ 
+    background-color: rgb(156, 151, 180);
+    border-radius: 5px;
+}
 
 .bg-nav{ 
     background-color: rgba(0, 0, 0, 0.0);

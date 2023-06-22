@@ -26,7 +26,9 @@ from mainapp.views import (
     Article,
     BlogView,
     Projects,
-    Other,
+    ProjectDisplay,
+    NoPermissions,
+    Qualifications,
 )
 
 from mainapp.api.api import(
@@ -40,9 +42,11 @@ urlpatterns = [
     path('education', Education.as_view(), name="education"),
     path('experience', Experience.as_view(), name="experience"),
     path('projects', Projects.as_view(), name="projects"),
-    path('other', Other.as_view(), name="other"),
+    path('qualifications', Qualifications.as_view(), name="qualifications"),
     path('curiculum_vitae', CuriculumVitae.as_view(), name="curiculum_vitae"),
     path('post', Article.as_view(),name="post" ),
     path('blog', BlogView.as_view(),name="blog" ),
+    path('projects/<int:pk>/' , ProjectDisplay.as_view(), name="project"),
+    path('projects/no-permissions', NoPermissions.as_view(), name="no_permissions"),
     path('endpoint', InitializeInstance.as_view(), name="end_point"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

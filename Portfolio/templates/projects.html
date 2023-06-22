@@ -1,7 +1,78 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{%block head %}
+    <link rel="stylesheet" href="{% static 'portfolio/css/projects.css' %}"/>
+{% endblock %}
+
+{% block title%} <title>Projects - Rafael's Portfolio</title>{% endblock %}
 
 {% block content %}
-<div class="text-center display-5">
-    <p> This part of the webiste is still under construction.</p>
-    <i class="fa-solid fa-person-digging fa-2xl"></i>
+    {% if request.user_agent.is_mobile %}
+        <div class="mt-4">
+    {% else %}
+        <div class="mt-7-1">
+    {% endif %}
+
+        <div class="mt-5">
+            <p class="text-center text-purple-2  display-4 fw-bold">
+                <i class="fa-sharp fa-solid fa-folder-open text-dark"></i> Projects
+            </p>
+        </div>
+        <div class="container d-flex align-items-center justify-content-center flex-wrap mb-3">
+            {% if request.user_agent.is_mobile %}
+                {% for project in projects %}
+                    {% if project.public %}
+                        <div class="box p-3">
+                            <div class="body">
+                                <div class="imgContainer h3 text-center d-flex justify-content-center align-items-center">
+                                    <div class="inner pat h3 text-center"></div>
+                                    <p name="title" class="title">{{ project.name }}</p>
+                                </div>
+                                <div class="content">
+                                    <div class="text-center display-10 mb-1">
+                                        <a class="d-block no-underline" href="{% url 'project' project.pk  %}" style="color: #21cfcf;">{{ project.name }}</a>
+                                    </div>
+                                    <div class="display-10">
+                                        <p>Role: {{ project.role }}</p>
+                                        <p>Organization: {{ project.company }}</p>
+                                    </div> 
+                                    <div class="mt-1 h-auto display-10">
+                                        <p> Type: {{ project.source_type }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for project in projects %}
+                    {% if project.public %}
+                        <div class="box p-5" name="box">
+                            <a style="all:unset;" href="{% url 'project' project.pk  %}">
+                                <div class="body">
+                                    <div class="imgContainer h3 text-center d-flex justify-content-center align-items-center">
+                                        <div class="inner pat h3 text-center"></div>
+                                        <p name="title" class="title">{{ project.name }}</p>
+                                    </div>
+                                    <div class="content">
+                                        <div class="display-10 mb-1">
+                                            <p>{{ project.name }}</p>
+                                        </div> 
+                                        <div class="display-10">
+                                            <p>Role: {{ project.role }}</p>
+                                            <p>Organization: {{ project.company }}</p>
+                                        </div> 
+                                        <div class="mt-1 display-10 h-15">
+                                            <p class="d-flex" style="top=100%;margin-top:-4.5%;">  Type: {{ project.source_type }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
