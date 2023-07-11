@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
+    dev_id = models.CharField(max_length=50, unique=True, null=True)
+    dev_model = models.CharField(max_length=100, null=True)
     is_admin = models.BooleanField(default=True)
     
 class Post(models.Model):
