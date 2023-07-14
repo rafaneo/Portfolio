@@ -29,8 +29,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'channels',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_user_agents',
 ]
 
+ASGI_APPLICATION = 'Portfolio.asgi.application'
 
 CKEDITOR_CONFIGS = {
     'default': {
