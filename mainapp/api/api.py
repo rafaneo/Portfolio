@@ -7,6 +7,8 @@ from rest_framework import status
 
 from mainapp.models import User
 
+from .serializers import LogsSerializer
+from mainapp.models import Logs
 
 class InitializeInstance(APIView):
     def get(self, request):
@@ -38,16 +40,29 @@ class InitializeInstance(APIView):
 
 
 class GetMessage(APIView):
-    def get(self, request):
+     def put(self, request):
+        try:
+            instance = Logs.objects.first()
+            print(instance)
+        except Logs.DoesNotExist:
+            return Response({"error": "Resource not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        test = request.headers.get("test")
-        print(request.headers)
-        data = {
-            "message": "Message Recieved"
-        }
-        status_code = status.HTTP_200_OK
+        print(request.data)
+        serializer = LogsSerializer(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def get(self, request):
+
+    #     test = request.headers.get("test")
+    #     print(request.headers)
+    #     data = {
+    #         "message": "Message Recieved"
+    #     }
+    #     status_code = status.HTTP_200_OK
         
-        return Response(data, status=status_code)
+    #     return Response(data, status=status_code)
 class OpenWS(APIView):
     pass
     # async def handle_message(self, websocket, path):

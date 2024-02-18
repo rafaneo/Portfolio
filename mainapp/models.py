@@ -99,3 +99,10 @@ class Qualifications(models.Model):
     
     class Meta:
         verbose_name_plural = "Qualifications"
+
+class Logs(models.Model):
+    date = models.DateField(auto_now=True, blank=True, null=True)
+    file = models.FileField(upload_to='logs/')
+
+    class Meta:
+        verbose_name_plural = "Logs"

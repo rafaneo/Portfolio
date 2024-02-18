@@ -7,6 +7,7 @@ from mainapp.models import (
     User,
     Post,
     Qualifications,
+    Logs,
 )
 # Register your models here.
 admin.site.register(School)
@@ -16,3 +17,4 @@ admin.site.register(User)
 admin.site.register(Post)
 admin.site.register(Project)
 admin.site.register(Qualifications)
+admin.site.register(Logs)
