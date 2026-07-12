@@ -2,10 +2,10 @@
 
 import { useCallback, useState } from "react";
 import { ProjectPaper } from "@/components/project-paper";
-import { projects } from "@/content/projects";
+import type { Project } from "@/content/types";
 import { cn } from "@/lib/utils";
 
-export function ProjectsGrid() {
+export function ProjectsGrid({ projects }: { projects: Project[] }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const active = projects.find((p) => p.id === activeId) ?? null;
   const close = useCallback(() => setActiveId(null), []);
@@ -72,7 +72,9 @@ export function ProjectsGrid() {
         })}
       </div>
 
-      {active && <ProjectPaper project={active} onClose={close} />}
+      {active && (
+        <ProjectPaper project={active} items={projects} onClose={close} />
+      )}
     </>
   );
 }

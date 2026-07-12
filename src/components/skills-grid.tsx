@@ -27,7 +27,7 @@ import {
   SiTypescript,
   SiWagtail,
 } from "react-icons/si";
-import { skillGroups } from "@/content/about";
+import type { SkillGroup } from "@/content/types";
 
 // Skills without a brand icon (practices, generic terms) render as text chips.
 const ICONS: Record<string, IconType> = {
@@ -60,7 +60,7 @@ const ICONS: Record<string, IconType> = {
  * Skill groups as a vertically scrollable column of cards, height-locked to
  * its neighbor (the radar) – native scroll/touch plus mouse drag-to-scroll.
  */
-export function SkillsGrid() {
+export function SkillsGrid({ groups }: { groups: SkillGroup[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ active: false, startY: 0, startTop: 0 });
 
@@ -92,7 +92,7 @@ export function SkillsGrid() {
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
         >
-          {skillGroups.map((group) => (
+          {groups.map((group) => (
             <div key={group.label} className="flex-none bg-white p-[22px]">
               <div className="mb-3.5 font-mono text-[11px] text-accent">
                 {group.label}

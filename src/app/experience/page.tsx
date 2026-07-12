@@ -4,6 +4,7 @@ import { ExperienceTimeline } from "@/components/experience-timeline";
 import { ProjectsPreview } from "@/components/projects-preview";
 import { PageHeader } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
+import { getEarlierRoles, getFeaturedProjects, getRoles } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Experience",
@@ -11,7 +12,12 @@ export const metadata: Metadata = {
     "",
 };
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const [roles, earlierRoles, featuredProjects] = await Promise.all([
+    getRoles(),
+    getEarlierRoles(),
+    getFeaturedProjects(),
+  ]);
   return (
     <main className="flex-1">
       <Container className="py-14 pb-10 md:py-16">
@@ -24,10 +30,13 @@ export default function ExperiencePage() {
       </Container>
 
       <Container className="pb-10">
-        <ExperienceTimeline />
+        <ExperienceTimeline roles={roles} earlierRoles={earlierRoles} />
       </Container>
 
-      <ProjectsPreview kicker="SOME PROJECTS I'VE WORKED ON" />
+      <ProjectsPreview
+        kicker="SOME PROJECTS I'VE WORKED ON"
+        projects={featuredProjects}
+      />
 
       <SiteFooter />
     </main>

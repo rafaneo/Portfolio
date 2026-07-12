@@ -4,11 +4,17 @@ import { useCallback, useState } from "react";
 import { Container } from "@/components/container";
 import { ProjectPaper } from "@/components/project-paper";
 import { SectionRow } from "@/components/section-heading";
-import { featuredProjects } from "@/content/projects";
+import type { Project } from "@/content/types";
 
-export function ProjectsPreview({ kicker }: { kicker: string }) {
+export function ProjectsPreview({
+  kicker,
+  projects,
+}: {
+  kicker: string;
+  projects: Project[];
+}) {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const active = featuredProjects.find((p) => p.id === activeId) ?? null;
+  const active = projects.find((p) => p.id === activeId) ?? null;
   const close = useCallback(() => setActiveId(null), []);
 
   return (
@@ -19,7 +25,7 @@ export function ProjectsPreview({ kicker }: { kicker: string }) {
           link={{ href: "/projects", label: "ALL PROJECTS →" }}
         />
         <div className="grid gap-px border border-line bg-line md:grid-cols-3">
-          {featuredProjects.map((project) => {
+          {projects.map((project) => {
             const inner = (
               <>
                 <div className="mb-3 font-mono text-[11px] text-accent">
@@ -62,7 +68,9 @@ export function ProjectsPreview({ kicker }: { kicker: string }) {
         </div>
       </Container>
 
-      {active && <ProjectPaper project={active} onClose={close} />}
+      {active && (
+        <ProjectPaper project={active} items={projects} onClose={close} />
+      )}
     </section>
   );
 }

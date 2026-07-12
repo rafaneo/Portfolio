@@ -5,8 +5,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { SkillsGrid } from "@/components/skills-grid";
 import { SkillsRadar } from "@/components/skills-radar";
 import { TerminalCard } from "@/components/terminal-card";
-import { achievements, education } from "@/content/about";
-import { profile } from "@/content/profile";
+import {
+  getAchievements,
+  getEducation,
+  getProfile,
+  getRadarAxes,
+  getSkillGroups,
+} from "@/lib/data";
 import { AchievementsSection } from "@/components/achievements-section";
 
 export const metadata: Metadata = {
@@ -15,7 +20,15 @@ export const metadata: Metadata = {
     "Software engineer and co-founder with 6+ years building backend systems, web platforms and mobile applications.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [profile, skillGroups, radarAxes, achievements, education] =
+    await Promise.all([
+      getProfile(),
+      getSkillGroups(),
+      getRadarAxes(),
+      getAchievements(),
+      getEducation(),
+    ]);
   return (
     <main className="flex-1">
       {/* HEADER + INTRO */}
@@ -28,7 +41,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-        <TerminalCard />
+        <TerminalCard lines={profile.terminal} />
       </Container>
 
       {/* SKILLS */}
@@ -38,14 +51,18 @@ export default function AboutPage() {
             <SectionKicker>SKILLS &amp; STACK</SectionKicker>
           </div>
           <div className="grid items-stretch gap-6 lg:grid-cols-2">
-            <SkillsRadar />
-            <SkillsGrid />
+            <SkillsRadar axes={radarAxes} />
+            <SkillsGrid groups={skillGroups} />
           </div>
         </Container>
       </section>
 
       {/* ACHIEVEMENTS */}
-      <AchievementsSection kicker="ACHIEVEMENTS" variant="full" />
+      <AchievementsSection
+        kicker="ACHIEVEMENTS"
+        variant="full"
+        achievements={achievements}
+      />
 
       {/* EDUCATION */}
       <section className="border-t border-line">

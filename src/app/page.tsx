@@ -5,11 +5,16 @@ import { ProjectsPreview } from "@/components/projects-preview";
 import { SectionRow } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { WireframeCube } from "@/components/wireframe-cube";
-import { roles } from "@/content/experience";
-import { profile } from "@/content/profile";
+import { getAchievements, getFeaturedProjects, getProfile, getRoles } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-export default function Home() {
+export default async function Home() {
+  const [profile, roles, featuredProjects, achievements] = await Promise.all([
+    getProfile(),
+    getRoles(),
+    getFeaturedProjects(),
+    getAchievements(),
+  ]);
   const previewRoles = roles.slice(0, 3);
 
   return (
@@ -114,10 +119,10 @@ export default function Home() {
       </section>
 
       {/* PROJECTS PREVIEW */}
-      <ProjectsPreview kicker="PROJECTS" />
+      <ProjectsPreview kicker="PROJECTS" projects={featuredProjects} />
 
       {/* ACHIEVEMENTS */}
-      <AchievementsSection kicker="ACTIVITIES" />
+      <AchievementsSection kicker="ACTIVITIES" achievements={achievements} />
 
       <SiteFooter />
     </main>

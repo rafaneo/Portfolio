@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rafael Neocleous — Portfolio
 
-## Getting Started
+Swiss-grid portfolio built with Next.js 16, Tailwind 4 and a Supabase-backed CMS.
 
-First, run the development server:
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without Supabase credentials the site renders from the static content files in
+`src/content/` — everything works except `/admin`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Connecting the CMS (Supabase)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a Supabase project, then copy `.env.local.example` → `.env.local`
+   and fill in the URL, anon key and service-role key.
+2. Apply the schema: paste `supabase/migrations/001_initial.sql` into the
+   Supabase SQL editor (or `supabase db push` with the CLI).
+3. Seed the current site content into the database:
+   ```bash
+   npx tsx --env-file=.env.local scripts/seed.ts
+   ```
+4. Create your admin user: Supabase dashboard → Authentication → Add user
+   (email + password), then grant the role in the SQL editor:
+   ```sql
+   INSERT INTO user_roles (user_id, role)
+   SELECT id, 'admin' FROM auth.users WHERE email = 'you@example.com';
+   ```
+5. Restart the dev server and sign in at `/admin`.
 
-## Learn More
+Once the env vars exist, the public pages read from Supabase instead of the
+static files, and every admin save republishes the site via `revalidatePath`.
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/content/` — static content + shared types. Acts as the fallback when
+  Supabase is not configured, and as the seed source.
+- `src/lib/data.ts` — content access layer (Supabase with static fallback).
+- `src/lib/supabase/` — browser/server/public/admin clients + middleware.
+- `src/app/admin/` — CMS: projects, experience, writing (Tiptap rich text),
+  about (skills/radar/achievements/education), settings (profile, CV upload).
+- `supabase/migrations/` — schema, RLS policies, storage bucket.
+- Storage: public `site-assets` bucket (achievement/role images, CV pdf).

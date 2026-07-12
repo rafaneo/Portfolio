@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { profile } from "@/content/profile";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -28,7 +27,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-export function SiteNav() {
+export function SiteNav({ brand }: { brand: string }) {
   return (
     <nav className="sticky top-0 z-10 border-b border-line bg-paper font-mono text-xs">
       {/* Desktop: one cell per page */}
@@ -37,7 +36,7 @@ export function SiteNav() {
           href="/"
           className="border-r border-line px-6 py-[18px] font-bold text-accent"
         >
-          {profile.brand}
+          {brand}
         </Link>
         {links.map((l) => (
           <div key={l.href} className="border-r border-line px-6 py-[18px]">
@@ -59,7 +58,7 @@ export function SiteNav() {
             href="/"
             className="border-r border-line px-5 py-3.5 font-bold text-accent"
           >
-            {profile.brand}
+            {brand}
           </Link>
           <Link
             href="/contact"

@@ -74,6 +74,78 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Rich text rendered from the CMS (writing posts). */
+.post-content {
+  color: var(--color-body);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.post-content p {
+  margin: 0 0 1.1em;
+}
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 1.8em 0 0.6em;
+}
+.post-content h2 {
+  font-size: 26px;
+}
+.post-content h3 {
+  font-size: 21px;
+}
+.post-content h4 {
+  font-size: 17px;
+}
+.post-content ul,
+.post-content ol {
+  margin: 0 0 1.1em;
+  padding-left: 1.4em;
+}
+.post-content ul {
+  list-style: square;
+}
+.post-content ol {
+  list-style: decimal;
+}
+.post-content li {
+  margin-bottom: 0.35em;
+}
+.post-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.post-content blockquote {
+  border-left: 2px solid var(--color-accent);
+  color: var(--color-muted);
+  margin: 1.4em 0;
+  padding-left: 1.2em;
+}
+.post-content code {
+  background: #eceef0;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  padding: 0.15em 0.4em;
+}
+.post-content pre {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 1.4em 0;
+  overflow-x: auto;
+  padding: 18px 20px;
+}
+.post-content pre code {
+  background: none;
+  padding: 0;
+}
+
 /* Ruled-paper background: one hairline every 28px. Pair with text set at
    leading-[28px] and block gaps in 28px multiples so copy sits on the lines. */
 .ruled {

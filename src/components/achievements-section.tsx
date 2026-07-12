@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Container } from "@/components/container";
 import { SectionKicker } from "@/components/section-heading";
-import { achievements } from "@/content/about";
 import type { Achievement } from "@/content/types";
 
 const PAGE_SIZE = 6;
@@ -14,10 +13,12 @@ const HOME_COUNT = 5; // 5 cards + the MORE ABOUT ME cell = an even 6-cell grid
 export function AchievementsSection({
   kicker,
   variant = "home",
+  achievements,
 }: {
   kicker: string;
   /** "home": first 5 + MORE ABOUT ME link. "full": everything, paginated. */
   variant?: "home" | "full";
+  achievements: Achievement[];
 }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -35,8 +36,10 @@ export function AchievementsSection({
   // Deep link: /?achievement=<id> opens its paper on load.
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("achievement");
-    if (id && achievements.some((a) => a.id === id)) setActiveId(id);
-  }, []);
+    if (!id || !achievements.some((a) => a.id === id)) return;
+    const timer = setTimeout(() => setActiveId(id), 0);
+    return () => clearTimeout(timer);
+  }, [achievements]);
 
   useEffect(() => {
     if (!active) return;
@@ -119,19 +122,23 @@ export function AchievementsSection({
         )}
       </Container>
 
-      {active && <AchievementPaper achievement={active} onClose={close} />}
+      {active && (
+        <AchievementPaper achievement={active} items={achievements} onClose={close} />
+      )}
     </section>
   );
 }
 
 function AchievementPaper({
   achievement,
+  items,
   onClose,
 }: {
   achievement: Achievement;
+  items: Achievement[];
   onClose: () => void;
 }) {
-  const index = achievements.findIndex((a) => a.id === achievement.id) + 1;
+  const index = items.findIndex((a) => a.id === achievement.id) + 1;
 
   return (
     <div
@@ -213,7 +220,7 @@ function AchievementPaper({
           </div>
           <div className="font-mono text-[10px] text-muted">
             {String(index).padStart(2, "0")} /{" "}
-            {String(achievements.length).padStart(2, "0")}
+            {String(items.length).padStart(2, "0")}
           </div>
         </div>
 

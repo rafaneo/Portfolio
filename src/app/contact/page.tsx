@@ -3,7 +3,7 @@ import { Container } from "@/components/container";
 import { PageHeader, SectionKicker } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { WireframeCube } from "@/components/wireframe-cube";
-import { profile } from "@/content/profile";
+import { getProfile } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     "Open to interesting engineering problems, collaborations and conversations.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const profile = await getProfile();
   return (
     <main className="flex flex-1 flex-col">
       {/* HERO */}

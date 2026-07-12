@@ -1,11 +1,17 @@
-import { profile } from "@/content/profile";
+import { getProfile } from "@/lib/data";
 
-export function SiteFooter({ variant = "default" }: { variant?: "default" | "colophon" }) {
+export async function SiteFooter({
+  variant = "default",
+}: {
+  variant?: "default" | "colophon";
+}) {
+  const profile = await getProfile();
+
   if (variant === "colophon") {
     return (
       <footer className="grid grid-cols-1 border-t border-line font-mono text-xs text-muted sm:grid-cols-2">
         <div className="border-b border-line px-6 py-[18px] sm:border-b-0 sm:border-r">
-          © 2026 RAFAEL NEOCLEOUS
+          © 2026 {profile.name.toUpperCase()}
         </div>
         <div className="px-6 py-[18px] sm:text-right">
           DESIGNED WITH A GRID AND ONE CUBE

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { radarAxes } from "@/content/about";
+import type { RadarAxis } from "@/content/types";
 
 const CX = 250;
 const CY = 190;
@@ -19,9 +19,9 @@ function easeOutCubic(x: number) {
 
 /**
  * Hexagonal proficiency radar – hairline rings and axes, accent polygon
- * that draws in when scrolled into view. Data: radarAxes in content/about.
+ * that draws in when scrolled into view. Data: axes in content/about.
  */
-export function SkillsRadar() {
+export function SkillsRadar({ axes }: { axes: RadarAxis[] }) {
   const ref = useRef<SVGSVGElement>(null);
   const [progress, setProgress] = useState(0);
   const started = useRef(false);
@@ -48,8 +48,8 @@ export function SkillsRadar() {
     return () => observer.disconnect();
   }, []);
 
-  const count = radarAxes.length;
-  const points = radarAxes
+  const count = axes.length;
+  const points = axes
     .map((axis, i) => {
       const [x, y] = vertex(i, (R * axis.level * progress) / 100, count);
       return `${x},${y}`;
@@ -68,7 +68,7 @@ export function SkillsRadar() {
       {RINGS.map((f) => (
         <polygon
           key={f}
-          points={radarAxes
+          points={axes
             .map((_, i) => vertex(i, R * f, count).join(","))
             .join(" ")}
           fill="none"
@@ -77,7 +77,7 @@ export function SkillsRadar() {
         />
       ))}
       {/* Axes */}
-      {radarAxes.map((_, i) => {
+      {axes.map((_, i) => {
         const [x, y] = vertex(i, R, count);
         return (
           <line
@@ -99,7 +99,7 @@ export function SkillsRadar() {
         strokeWidth="1.5"
       />
       {/* Vertex markers */}
-      {radarAxes.map((axis, i) => {
+      {axes.map((axis, i) => {
         const [x, y] = vertex(i, (R * axis.level * progress) / 100, count);
         return (
           <rect
@@ -113,7 +113,7 @@ export function SkillsRadar() {
         );
       })}
       {/* Labels */}
-      {radarAxes.map((axis, i) => {
+      {axes.map((axis, i) => {
         const [x, y] = vertex(i, R + 26, count);
         const cos = Math.cos(-Math.PI / 2 + (i * 2 * Math.PI) / count);
         const anchor =

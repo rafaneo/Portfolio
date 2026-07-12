@@ -1,11 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { earlierRoles, roles } from "@/content/experience";
-import type { ExperienceRole } from "@/content/types";
+import type { EarlierRole, ExperienceRole } from "@/content/types";
 import { cn } from "@/lib/utils";
 
-export function ExperienceTimeline() {
+export function ExperienceTimeline({
+  roles,
+  earlierRoles,
+}: {
+  roles: ExperienceRole[];
+  earlierRoles: EarlierRole[];
+}) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -171,9 +176,20 @@ function ChapterModal({
           <div className="font-mono text-xs text-[#7a9bff]">
             CHAPTER {role.num}
           </div>
-          <div className="hidden h-[210px] flex-none items-center justify-center border border-dashed border-[#3a3f45] font-mono text-[11px] text-[#8a9099] md:flex">
-            PHOTO – COMING WITH THE CMS
-          </div>
+          {role.imageUrl ? (
+            <div className="relative hidden h-[210px] flex-none md:block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={role.imageUrl}
+                alt={`${role.title} · ${role.org}`}
+                className="size-full border border-[#3a3f45] object-cover"
+              />
+            </div>
+          ) : (
+            <div className="hidden h-[210px] flex-none items-center justify-center border border-dashed border-[#3a3f45] font-mono text-[11px] text-[#8a9099] md:flex">
+              PHOTO – VIA THE CMS
+            </div>
+          )}
           <div className="flex flex-col gap-3.5 text-[13px]">
             <div>
               <div className="mb-1 font-mono text-[10px] tracking-[0.12em] text-[#8a9099]">

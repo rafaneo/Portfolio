@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { projects } from "@/content/projects";
 import type { Project } from "@/content/types";
 
 /**
@@ -10,12 +9,14 @@ import type { Project } from "@/content/types";
  */
 export function ProjectPaper({
   project,
+  items,
   onClose,
 }: {
   project: Project;
+  items: Project[];
   onClose: () => void;
 }) {
-  const index = projects.findIndex((p) => p.id === project.id) + 1;
+  const index = items.findIndex((p) => p.id === project.id) + 1;
   const paragraphs = project.story ?? [project.description];
 
   useEffect(() => {
@@ -81,7 +82,7 @@ export function ProjectPaper({
           </div>
           <div className="font-mono text-[10px] text-muted">
             {String(index).padStart(2, "0")} /{" "}
-            {String(projects.length).padStart(2, "0")}
+            {String(items.length).padStart(2, "0")}
           </div>
         </div>
 

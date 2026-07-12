@@ -3,8 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
-import { posts } from "@/content/posts";
-import { profile } from "@/content/profile";
+import { getPosts, getProfile } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -12,7 +11,8 @@ export const metadata: Metadata = {
     "Occasional notes on backend architecture, delivery and building products end-to-end.",
 };
 
-export default function WritingPage() {
+export default async function WritingPage() {
+  const [posts, profile] = await Promise.all([getPosts(), getProfile()]);
   return (
     <main className="flex flex-1 flex-col">
       <Container className="py-14 pb-10 md:py-16">

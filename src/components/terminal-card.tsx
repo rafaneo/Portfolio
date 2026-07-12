@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { profile } from "@/content/profile";
+import type { TerminalLine } from "@/content/types";
 
 const TYPE_MS = 45;
 const OUTPUT_DELAY_MS = 300;
@@ -11,10 +11,9 @@ type Shown = { cmd: string; out?: string };
 
 /**
  * A small fake shell that types out who Rafael is, one command at a time.
- * Content comes from profile.terminal.
+ * Line content is passed in from the data layer.
  */
-export function TerminalCard() {
-  const lines = profile.terminal;
+export function TerminalCard({ lines }: { lines: TerminalLine[] }) {
   const [shown, setShown] = useState<Shown[]>([]);
   const [typing, setTyping] = useState("");
   const [done, setDone] = useState(false);
