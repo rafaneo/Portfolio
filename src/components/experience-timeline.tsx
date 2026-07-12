@@ -190,14 +190,16 @@ function ChapterModal({
               </div>
               <div className="font-semibold">{role.locationFull}</div>
             </div>
-            <div>
-              <div className="mb-1 font-mono text-[10px] tracking-[0.12em] text-[#8a9099]">
-                STACK
+            {role.stack && (
+              <div>
+                <div className="mb-1 font-mono text-[10px] tracking-[0.12em] text-[#8a9099]">
+                  STACK
+                </div>
+                <div className="font-mono text-[11.5px] leading-[1.7] text-[#c8cdd3]">
+                  {role.stack}
+                </div>
               </div>
-              <div className="font-mono text-[11.5px] leading-[1.7] text-[#c8cdd3]">
-                {role.stack}
-              </div>
-            </div>
+            )}
           </div>
           <div className="mt-auto hidden font-mono text-[10px] text-[#8a9099] md:block">
             RN – TIMELINE / {role.num}

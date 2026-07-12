@@ -32,6 +32,9 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
     display_order: project?.display_order ?? 0,
     active: project?.active ?? true,
   });
+  // Raw textarea text; parsed into paragraphs only on submit so Enter
+  // isn't swallowed by re-normalization while typing.
+  const [storyText, setStoryText] = useState((project?.story ?? []).join("\n"));
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
 
@@ -43,7 +46,10 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
     setError("");
     startTransition(async () => {
       try {
-        await saveProject(project?.id ?? null, form);
+        await saveProject(project?.id ?? null, {
+          ...form,
+          story: storyText.split("\n").filter((line) => line.trim()),
+        });
       } catch (err) {
         if (err instanceof Error && !err.message.includes("NEXT_REDIRECT")) {
           setError(err.message);
@@ -118,13 +124,8 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
           >
             <TextArea
               rows={6}
-              value={form.story.join("\n")}
-              onChange={(e) =>
-                set(
-                  "story",
-                  e.target.value.split("\n").filter((line) => line.trim())
-                )
-              }
+              value={storyText}
+              onChange={(e) => setStoryText(e.target.value)}
             />
           </Field>
         </div>

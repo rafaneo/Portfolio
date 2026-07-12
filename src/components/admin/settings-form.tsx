@@ -16,6 +16,16 @@ import { createClient } from "@/lib/supabase/client";
 export function SettingsForm({ initial }: { initial: Profile }) {
   const router = useRouter();
   const [form, setForm] = useState<Profile>(initial);
+  // Raw multi-line text; parsed on submit so Enter isn't swallowed.
+  const [introText, setIntroText] = useState(initial.aboutIntro.join("\n"));
+  const [terminalText, setTerminalText] = useState(
+    initial.terminal.map((l) => `${l.cmd} | ${l.out}`).join("\n")
+  );
+  const [channelsText, setChannelsText] = useState(
+    initial.channels
+      .map((c) => `${c.label} | ${c.value} | ${c.href ?? ""}`)
+      .join("\n")
+  );
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
@@ -52,9 +62,35 @@ export function SettingsForm({ initial }: { initial: Profile }) {
     e.preventDefault();
     setError("");
     setSaved(false);
+    const parsed: Profile = {
+      ...form,
+      aboutIntro: introText.split("\n").filter((p) => p.trim()),
+      terminal: terminalText
+        .split("\n")
+        .filter((line) => line.trim())
+        .map((line): TerminalLine => {
+          const [cmd = "", out = ""] = line.split("|").map((s) => s.trim());
+          return { cmd, out };
+        }),
+      channels: channelsText
+        .split("\n")
+        .filter((line) => line.trim())
+        .map((line, i): ContactChannel => {
+          const [label = "", value = "", href = ""] = line
+            .split("|")
+            .map((s) => s.trim());
+          return {
+            key: `channel-${i}`,
+            label,
+            value,
+            href: href || undefined,
+            external: href.startsWith("http") || undefined,
+          };
+        }),
+    };
     startTransition(async () => {
       try {
-        await saveProfile(form);
+        await saveProfile(parsed);
         setSaved(true);
         router.refresh();
       } catch (err) {
@@ -98,29 +134,8 @@ export function SettingsForm({ initial }: { initial: Profile }) {
           <Field label="CONTACT PAGE CHANNELS (LABEL | VALUE | URL, one per line)">
             <TextArea
               rows={6}
-              value={form.channels
-                .map((c) => `${c.label} | ${c.value} | ${c.href ?? ""}`)
-                .join("\n")}
-              onChange={(e) =>
-                set(
-                  "channels",
-                  e.target.value
-                    .split("\n")
-                    .filter((line) => line.trim())
-                    .map((line, i): ContactChannel => {
-                      const [label = "", value = "", href = ""] = line
-                        .split("|")
-                        .map((s) => s.trim());
-                      return {
-                        key: `channel-${i}`,
-                        label,
-                        value,
-                        href: href || undefined,
-                        external: href.startsWith("http") || undefined,
-                      };
-                    })
-                )
-              }
+              value={channelsText}
+              onChange={(e) => setChannelsText(e.target.value)}
             />
           </Field>
           <Field label="CV (PDF)">
@@ -176,32 +191,16 @@ export function SettingsForm({ initial }: { initial: Profile }) {
       <AdminCard title="ABOUT INTRO (ONE PARAGRAPH PER LINE)">
         <TextArea
           rows={7}
-          value={form.aboutIntro.join("\n")}
-          onChange={(e) =>
-            set(
-              "aboutIntro",
-              e.target.value.split("\n").filter((p) => p.trim())
-            )
-          }
+          value={introText}
+          onChange={(e) => setIntroText(e.target.value)}
         />
       </AdminCard>
 
       <AdminCard title="TERMINAL CARD (CMD | OUTPUT, ONE PER LINE)">
         <TextArea
           rows={6}
-          value={form.terminal.map((l) => `${l.cmd} | ${l.out}`).join("\n")}
-          onChange={(e) =>
-            set(
-              "terminal",
-              e.target.value
-                .split("\n")
-                .filter((line) => line.trim())
-                .map((line): TerminalLine => {
-                  const [cmd = "", out = ""] = line.split("|").map((s) => s.trim());
-                  return { cmd, out };
-                })
-            )
-          }
+          value={terminalText}
+          onChange={(e) => setTerminalText(e.target.value)}
         />
       </AdminCard>
 
