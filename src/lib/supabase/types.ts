@@ -17,16 +17,6 @@ export type ExperienceRow = {
   active: boolean;
 };
 
-export type EarlierRoleRow = {
-  id: string;
-  dates: string;
-  location: string;
-  title: string;
-  org: string;
-  display_order: number;
-  active: boolean;
-};
-
 export type ProjectRow = {
   id: string;
   category: string;

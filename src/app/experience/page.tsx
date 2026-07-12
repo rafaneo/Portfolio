@@ -4,7 +4,7 @@ import { ExperienceTimeline } from "@/components/experience-timeline";
 import { ProjectsPreview } from "@/components/projects-preview";
 import { PageHeader } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
-import { getEarlierRoles, getFeaturedProjects, getRoles } from "@/lib/data";
+import { getFeaturedProjects, getRoles } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Experience",
@@ -13,9 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ExperiencePage() {
-  const [roles, earlierRoles, featuredProjects] = await Promise.all([
+  const [roles, featuredProjects] = await Promise.all([
     getRoles(),
-    getEarlierRoles(),
     getFeaturedProjects(),
   ]);
   return (
@@ -30,7 +29,7 @@ export default async function ExperiencePage() {
       </Container>
 
       <Container className="pb-10">
-        <ExperienceTimeline roles={roles} earlierRoles={earlierRoles} />
+        <ExperienceTimeline roles={roles} />
       </Container>
 
       <ProjectsPreview

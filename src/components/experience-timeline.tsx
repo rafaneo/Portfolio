@@ -1,16 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { EarlierRole, ExperienceRole } from "@/content/types";
+import type { ExperienceRole } from "@/content/types";
 import { cn } from "@/lib/utils";
 
-export function ExperienceTimeline({
-  roles,
-  earlierRoles,
-}: {
-  roles: ExperienceRole[];
-  earlierRoles: EarlierRole[];
-}) {
+export function ExperienceTimeline({ roles }: { roles: ExperienceRole[] }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -42,11 +36,8 @@ export function ExperienceTimeline({
       const fillBottomY = rect.top + rect.height * progress;
       el.querySelectorAll<HTMLElement>("[data-tl-dot]").forEach((dot) => {
         const passed = dot.getBoundingClientRect().top + 5 <= fillBottomY;
-        const isEarlier = dot.dataset.tlDot?.startsWith("earlier") ?? false;
         dot.style.background = passed
-          ? isEarlier
-            ? "var(--color-muted)"
-            : "var(--color-accent)"
+          ? "var(--color-accent)"
           : "var(--color-paper)";
       });
     };
@@ -83,68 +74,64 @@ export function ExperienceTimeline({
           <div ref={fillRef} className="w-full bg-accent" style={{ height: "0%" }} />
         </div>
 
-        {roles.map((role) => (
-          <button
-            key={role.id}
-            type="button"
-            onClick={() => setActiveId(role.id)}
-            className="relative grid w-full cursor-pointer grid-cols-1 gap-x-[58px] pb-9 pl-0 pr-3 pt-2 text-left transition-colors hover:bg-white md:grid-cols-[172px_1fr]"
-          >
-            <div
-              data-tl-dot={role.id}
-              className="absolute left-[196px] top-3.5 z-[2] hidden size-2.5 border-2 border-accent bg-paper md:block"
-            />
-            <div className="pt-2 font-mono text-xs leading-[1.7] text-muted">
-              {role.dates}
-              <br className="hidden md:block" />
-              <span className="md:hidden"> · </span>
-              {role.location}
-            </div>
-            <div className="pt-1.5">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <div className="text-lg font-semibold md:text-[22px]">
-                  {role.title} · {role.org}
+        {roles.map((role, i) => {
+          const hasChapter = role.story.length > 0;
+          const rowClass = cn(
+            "relative grid w-full grid-cols-1 gap-x-[58px] pl-0 pr-3 pt-2 text-left md:grid-cols-[172px_1fr]",
+            i === roles.length - 1 ? "pb-2" : "pb-9",
+            hasChapter && "cursor-pointer transition-colors hover:bg-white"
+          );
+          const inner = (
+            <>
+              <div
+                data-tl-dot={role.id}
+                className="absolute left-[196px] top-3.5 z-[2] hidden size-2.5 border-2 border-accent bg-paper md:block"
+              />
+              <div className="pt-2 font-mono text-xs leading-[1.7] text-muted">
+                {role.dates}
+                <br className="hidden md:block" />
+                <span className="md:hidden"> · </span>
+                {role.location}
+              </div>
+              <div className="pt-1.5">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <div className="text-lg font-semibold md:text-[22px]">
+                    {role.title} · {role.org}
+                  </div>
+                  {hasChapter && (
+                    <div className="flex-none font-mono text-[11px] text-accent">
+                      CH.{role.num} – OPEN +
+                    </div>
+                  )}
                 </div>
-                <div className="flex-none font-mono text-[11px] text-accent">
-                  CH.{role.num} – OPEN +
-                </div>
+                {role.summary && (
+                  <p className="mt-2 max-w-[640px] text-sm leading-relaxed text-body">
+                    {role.summary}
+                  </p>
+                )}
+                {role.stack && (
+                  <div className="mt-2.5 font-mono text-[11px] text-muted">
+                    {role.stack}
+                  </div>
+                )}
               </div>
-              <p className="mt-2 max-w-[640px] text-sm leading-relaxed text-body">
-                {role.summary}
-              </p>
-              <div className="mt-2.5 font-mono text-[11px] text-muted">
-                {role.stack}
-              </div>
+            </>
+          );
+          return hasChapter ? (
+            <button
+              key={role.id}
+              type="button"
+              onClick={() => setActiveId(role.id)}
+              className={rowClass}
+            >
+              {inner}
+            </button>
+          ) : (
+            <div key={role.id} className={rowClass}>
+              {inner}
             </div>
-          </button>
-        ))}
-
-        {/* Earlier roles – same rows, muted dots, no chapter */}
-        {earlierRoles.map((earlier, i) => (
-          <div
-            key={earlier.id}
-            className={cn(
-              "relative grid grid-cols-1 gap-x-[58px] pr-3 pt-2 md:grid-cols-[172px_1fr]",
-              i === earlierRoles.length - 1 ? "pb-2" : "pb-9"
-            )}
-          >
-            <div
-              data-tl-dot={`earlier-${earlier.id}`}
-              className="absolute left-[196px] top-3.5 z-[2] hidden size-2.5 border-2 border-muted bg-paper md:block"
-            />
-            <div className="pt-2 font-mono text-xs leading-[1.7] text-muted">
-              {earlier.dates}
-              <br className="hidden md:block" />
-              <span className="md:hidden"> · </span>
-              {earlier.location}
-            </div>
-            <div className="pt-1.5">
-              <div className="text-lg font-semibold md:text-[22px]">
-                {earlier.title} · {earlier.org}
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {activeRole && <ChapterModal role={activeRole} onClose={close} />}

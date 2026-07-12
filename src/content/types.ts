@@ -44,14 +44,6 @@ export type ExperienceRole = {
   imageUrl?: string;
 };
 
-export type EarlierRole = {
-  id: string;
-  dates: string;
-  location: string;
-  title: string;
-  org: string;
-};
-
 export type Project = {
   id: string;
   category: string;

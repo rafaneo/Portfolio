@@ -5,16 +5,12 @@ import {
   radarAxes as staticRadarAxes,
   skillGroups as staticSkillGroups,
 } from "@/content/about";
-import {
-  earlierRoles as staticEarlierRoles,
-  roles as staticRoles,
-} from "@/content/experience";
+import { roles as staticRoles } from "@/content/experience";
 import { posts as staticPosts } from "@/content/posts";
 import { profile as staticProfile } from "@/content/profile";
 import { projects as staticProjects } from "@/content/projects";
 import type {
   Achievement,
-  EarlierRole,
   Education,
   ExperienceRole,
   Post,
@@ -26,7 +22,6 @@ import type {
 import { createPublicClient, hasSupabase } from "@/lib/supabase/public";
 import type {
   AchievementRow,
-  EarlierRoleRow,
   EducationRow,
   ExperienceRow,
   PostRow,
@@ -74,23 +69,6 @@ export const getRoles = cache(async (): Promise<ExperienceRole[]> => {
     stack: row.stack,
     story: row.story ?? [],
     imageUrl: row.image_url ?? undefined,
-  }));
-});
-
-export const getEarlierRoles = cache(async (): Promise<EarlierRole[]> => {
-  if (!hasSupabase()) return staticEarlierRoles;
-  const { data } = await createPublicClient()
-    .from("earlier_roles")
-    .select("*")
-    .eq("active", true)
-    .order("display_order");
-  if (!data) return staticEarlierRoles;
-  return (data as EarlierRoleRow[]).map((row) => ({
-    id: row.id,
-    dates: row.dates,
-    location: row.location,
-    title: row.title,
-    org: row.org,
   }));
 });
 

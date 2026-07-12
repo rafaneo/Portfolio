@@ -16,7 +16,7 @@ import {
   radarAxes,
   skillGroups,
 } from "../src/content/about";
-import { earlierRoles, roles } from "../src/content/experience";
+import { roles } from "../src/content/experience";
 import { profile } from "../src/content/profile";
 import { projects } from "../src/content/projects";
 
@@ -66,17 +66,6 @@ async function main() {
       summary: r.summary,
       stack: r.stack,
       story: r.story,
-      display_order: i,
-    }))
-  );
-
-  await seed(
-    "earlier_roles",
-    earlierRoles.map((r, i) => ({
-      dates: r.dates,
-      location: r.location,
-      title: r.title,
-      org: r.org,
       display_order: i,
     }))
   );

@@ -1,4 +1,4 @@
-import type { EarlierRole, ExperienceRole } from "./types";
+import type { ExperienceRole } from "./types";
 
 export const roles: ExperienceRole[] = [
   {
@@ -83,40 +83,29 @@ export const roles: ExperienceRole[] = [
   },
 ];
 
-export const earlierRoles: EarlierRole[] = [
-  {
-    id: "phoebe",
-    dates: "2021 – 2023",
-    location: "CYPRUS",
-    title: "Software Developer",
-    org: "PHOEBE Research & Innovation",
-  },
-  {
-    id: "ordinatio",
-    dates: "2022 – 2023",
-    location: "CYPRUS",
-    title: "Team Lead / Developer",
-    org: "Ordinatio Garden Industry",
-  },
-  {
-    id: "algolysis",
-    dates: "2021",
-    location: "CYPRUS",
-    title: "Unity 3D Developer",
-    org: "Algolysis Ltd",
-  },
-  {
-    id: "cseo",
-    dates: "2021",
-    location: "CYPRUS",
-    title: "Electronics Specialist Intern",
-    org: "CSEO",
-  },
-  {
-    id: "engino",
-    dates: "2020 – 2021",
-    location: "CYPRUS",
-    title: "Embedded Systems Engineer",
-    org: "Engino",
-  },
-];
+const compact = (
+  num: string,
+  dates: string,
+  title: string,
+  org: string
+): ExperienceRole => ({
+  id: org.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+  num,
+  dates,
+  location: "CYPRUS",
+  locationFull: "Cyprus",
+  title,
+  org,
+  kicker: "",
+  summary: "",
+  stack: "",
+  story: [],
+});
+
+roles.push(
+  compact("05", "2021 – 2023", "Software Developer", "PHOEBE Research & Innovation"),
+  compact("06", "2022 – 2023", "Team Lead / Developer", "Ordinatio Garden Industry"),
+  compact("07", "2021", "Unity 3D Developer", "Algolysis Ltd"),
+  compact("08", "2021", "Electronics Specialist Intern", "CSEO"),
+  compact("09", "2020 – 2021", "Embedded Systems Engineer", "Engino")
+);

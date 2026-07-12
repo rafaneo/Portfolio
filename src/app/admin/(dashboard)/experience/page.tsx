@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { EarlierRolesManager } from "@/components/admin/earlier-roles-manager";
 import { createClient } from "@/lib/supabase/server";
-import type { EarlierRoleRow, ExperienceRow } from "@/lib/supabase/types";
+import type { ExperienceRow } from "@/lib/supabase/types";
 
 export default async function AdminExperiencePage() {
   const supabase = await createClient();
-  const [{ data: roles }, { data: earlier }] = await Promise.all([
-    supabase.from("experiences").select("*").order("display_order"),
-    supabase.from("earlier_roles").select("*").order("display_order"),
-  ]);
+  const { data: roles } = await supabase
+    .from("experiences")
+    .select("*")
+    .order("display_order");
 
   return (
     <div className="flex flex-col gap-8">
@@ -47,7 +46,6 @@ export default async function AdminExperiencePage() {
         ))}
       </div>
 
-      <EarlierRolesManager rows={(earlier ?? []) as EarlierRoleRow[]} />
     </div>
   );
 }
