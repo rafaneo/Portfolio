@@ -26,10 +26,11 @@ export function SettingsForm({ initial }: { initial: Profile }) {
   const [terminalText, setTerminalText] = useState(
     initial.terminal.map((l) => `${l.cmd} | ${l.out}`).join("\n")
   );
-  const [cubeText, setCubeText] = useState(
-    (initial.cubeFaces ?? [])
-      .map((f) => `${f.label} | ${f.href}`)
-      .join("\n")
+  const [cubeFaces, setCubeFaces] = useState<CubeFace[]>(
+    Array.from({ length: 6 }, (_, i) => ({
+      label: initial.cubeFaces?.[i]?.label ?? "",
+      href: initial.cubeFaces?.[i]?.href ?? "",
+    }))
   );
   const [channelsText, setChannelsText] = useState(
     initial.channels
@@ -82,14 +83,10 @@ export function SettingsForm({ initial }: { initial: Profile }) {
           const [cmd = "", out = ""] = line.split("|").map((s) => s.trim());
           return { cmd, out };
         }),
-      cubeFaces: cubeText
-        .split("\n")
-        .filter((line) => line.trim())
-        .slice(0, 6)
-        .map((line): CubeFace => {
-          const [label = "", href = ""] = line.split("|").map((s) => s.trim());
-          return { label, href };
-        }),
+      cubeFaces: cubeFaces.map((f) => ({
+        label: f.label.trim(),
+        href: f.href.trim(),
+      })),
       channels: channelsText
         .split("\n")
         .filter((line) => line.trim())
@@ -214,15 +211,43 @@ export function SettingsForm({ initial }: { initial: Profile }) {
         />
       </AdminCard>
 
-      <AdminCard title="HERO CUBE FACES (LABEL | URL, ONE PER LINE, MAX 6)">
-        <TextArea
-          rows={6}
-          value={cubeText}
-          onChange={(e) => setCubeText(e.target.value)}
-        />
-        <p className="mt-2 font-mono text-[10px] text-muted">
-          ORDER: FRONT · BACK · RIGHT · LEFT · TOP · BOTTOM. HTTP(S) URLS OPEN
-          IN A NEW TAB.
+      <AdminCard title="HERO CUBE FACES">
+        <div className="flex flex-col gap-3">
+          {(["FRONT", "BACK", "RIGHT", "LEFT", "TOP", "BOTTOM"] as const).map(
+            (side, i) => (
+              <div
+                key={side}
+                className="grid items-center gap-2 md:grid-cols-[70px_1fr_2fr]"
+              >
+                <span className="font-mono text-[10px] text-muted">{side}</span>
+                <TextInput
+                  placeholder="Label"
+                  value={cubeFaces[i].label}
+                  onChange={(e) =>
+                    setCubeFaces((faces) =>
+                      faces.map((f, j) =>
+                        j === i ? { ...f, label: e.target.value } : f
+                      )
+                    )
+                  }
+                />
+                <TextInput
+                  placeholder="/page or https://…"
+                  value={cubeFaces[i].href}
+                  onChange={(e) =>
+                    setCubeFaces((faces) =>
+                      faces.map((f, j) =>
+                        j === i ? { ...f, href: e.target.value } : f
+                      )
+                    )
+                  }
+                />
+              </div>
+            )
+          )}
+        </div>
+        <p className="mt-3 font-mono text-[10px] text-muted">
+          HTTP(S) URLS OPEN IN A NEW TAB. EMPTY ROWS RENDER AS BLANK FACES.
         </p>
       </AdminCard>
 

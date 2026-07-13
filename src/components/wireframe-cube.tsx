@@ -111,7 +111,6 @@ export function WireframeCube({
     draggingRef.current = true;
     dragDistRef.current = 0;
     lastPointer.current = { x: e.clientX, y: e.clientY };
-    wrapRef.current?.setPointerCapture(e.pointerId);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -120,6 +119,15 @@ export function WireframeCube({
     const dy = e.clientY - lastPointer.current.y;
     lastPointer.current = { x: e.clientX, y: e.clientY };
     dragDistRef.current += Math.abs(dx) + Math.abs(dy);
+    // Capture only once this is unmistakably a drag. Capturing on
+    // pointer-down would retarget the click to the wrapper and swallow
+    // the face links.
+    if (
+      dragDistRef.current > CLICK_DRAG_THRESHOLD &&
+      !wrapRef.current?.hasPointerCapture(e.pointerId)
+    ) {
+      wrapRef.current?.setPointerCapture(e.pointerId);
+    }
     angle.current.y += dx * DRAG_SENSITIVITY;
     angle.current.x = Math.max(
       -85,
@@ -178,11 +186,7 @@ export function WireframeCube({
             "transition-[transform,background-color] duration-500 ease-out",
             face && "hover:bg-accent/15"
           );
-          if (!face || !face.href) {
-            return <div key={i} className={className} style={style} />;
-          }
-          const external = face.href.startsWith("http");
-          const label = (
+          const label = face?.label ? (
             <span
               className={cn(
                 "font-mono text-[10px] font-bold tracking-[0.15em] text-accent",
@@ -193,7 +197,15 @@ export function WireframeCube({
             >
               {face.label}
             </span>
-          );
+          ) : null;
+          if (!face?.href) {
+            return (
+              <div key={i} className={className} style={style}>
+                {label}
+              </div>
+            );
+          }
+          const external = face.href.startsWith("http");
           return external ? (
             <a
               key={i}
