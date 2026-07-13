@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Container } from "@/components/container";
 import { SectionKicker } from "@/components/section-heading";
+import { StoryBlocksBody, StoryLinks } from "@/components/story-blocks";
 import type { Achievement } from "@/content/types";
 
 const PAGE_SIZE = 6;
@@ -173,42 +173,11 @@ function AchievementPaper({
           </div>
           <div className="ruled mt-7 px-10 pb-[28px] md:px-14">
             <div className="flex flex-col gap-[28px]">
-              {achievement.story.map((block, i) =>
-                block.type === "text" ? (
-                  <p key={i} className="text-[15px] leading-[28px] text-body">
-                    {block.text}
-                  </p>
-                ) : block.src ? (
-                  <figure key={i}>
-                    <Image
-                      src={block.src}
-                      alt={block.caption ?? achievement.title}
-                      width={1200}
-                      height={675}
-                      className="w-full border border-line bg-white"
-                    />
-                    {block.caption && (
-                      <figcaption className="font-mono text-[11px] leading-[28px] text-muted">
-                        {block.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                ) : (
-                  <div
-                    key={i}
-                    className="flex h-[196px] flex-col items-center justify-center gap-2 border border-dashed border-[#b9bec3] bg-white"
-                  >
-                    <div className="font-mono text-[11px] text-muted">
-                      IMAGE – COMING WITH THE CMS
-                    </div>
-                    {block.caption && (
-                      <div className="font-mono text-[11px] text-accent">
-                        {block.caption}
-                      </div>
-                    )}
-                  </div>
-                )
-              )}
+              <StoryBlocksBody
+                blocks={achievement.story}
+                fallbackAlt={achievement.title}
+              />
+              <StoryLinks blocks={achievement.story} />
             </div>
           </div>
         </div>

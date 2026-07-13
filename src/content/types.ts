@@ -57,7 +57,7 @@ export type Project = {
   /** External case study/site. When set, the card links out (with a ↗ mark). */
   url?: string;
   /** Popup content. When there is no url, the card opens an in-page paper. */
-  story?: string[];
+  story?: StoryBlock[];
 };
 
 export type SkillGroup = {
@@ -75,16 +75,18 @@ export type TerminalLine = {
   out: string;
 };
 
-export type AchievementBlock =
+export type StoryBlock =
   | { type: "text"; text: string }
-  | { type: "image"; src?: string; caption?: string };
+  | { type: "image"; src?: string; caption?: string }
+  /** Link blocks always render pinned at the end of the paper. */
+  | { type: "link"; label: string; href: string };
 
 export type Achievement = {
   id: string;
   title: string;
   badge: string;
   summary: string;
-  story: AchievementBlock[];
+  story: StoryBlock[];
 };
 
 export type Education = {

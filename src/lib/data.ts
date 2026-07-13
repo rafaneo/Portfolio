@@ -72,6 +72,15 @@ export const getRoles = cache(async (): Promise<ExperienceRole[]> => {
   }));
 });
 
+function normalizeStory(
+  story: unknown
+): Project["story"] {
+  if (!Array.isArray(story) || story.length === 0) return undefined;
+  return story.map((block) =>
+    typeof block === "string" ? { type: "text" as const, text: block } : block
+  );
+}
+
 function mapProject(row: ProjectRow): Project {
   return {
     id: row.id,
@@ -84,7 +93,7 @@ function mapProject(row: ProjectRow): Project {
     featured: row.featured,
     spanFull: row.span_full || undefined,
     url: row.url ?? undefined,
-    story: row.story?.length ? row.story : undefined,
+    story: normalizeStory(row.story),
   };
 }
 

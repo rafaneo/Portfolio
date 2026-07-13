@@ -1,4 +1,4 @@
-import type { AchievementBlock, Profile } from "@/content/types";
+import type { StoryBlock, Profile } from "@/content/types";
 
 export type ExperienceRow = {
   id: string;
@@ -28,7 +28,7 @@ export type ProjectRow = {
   featured: boolean;
   span_full: boolean;
   url: string | null;
-  story: string[];
+  story: StoryBlock[];
   display_order: number;
   active: boolean;
 };
@@ -64,7 +64,7 @@ export type AchievementRow = {
   title: string;
   badge: string;
   summary: string;
-  story: AchievementBlock[];
+  story: StoryBlock[];
   display_order: number;
   active: boolean;
 };

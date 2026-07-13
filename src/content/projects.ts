@@ -13,9 +13,9 @@ export const projects: Project[] = [
     stack: "Django/DRF · Next.js · Flutter · PostgreSQL · Celery/Redis · Firebase",
     featured: true,
     story: [
-      "Full-stack platform for Synergas, a gas-shipping company: customer and staff management, shipment management, live order tracking, notifications, dashboards, RBAC and customer support.",
-      "Django/DRF backend, Next.js admin portal and a Flutter mobile app for customers, backed by PostgreSQL, Celery and Redis, with Firebase push notifications.",
-      "Built and delivered through Caonyx, from the first architecture sketch to production rollout.",
+      { type: "text", text: "Full-stack platform for Synergas, a gas-shipping company: customer and staff management, shipment management, live order tracking, notifications, dashboards, RBAC and customer support." },
+      { type: "text", text: "Django/DRF backend, Next.js admin portal and a Flutter mobile app for customers, backed by PostgreSQL, Celery and Redis, with Firebase push notifications." },
+      { type: "text", text: "Built and delivered through Caonyx, from the first architecture sketch to production rollout." },
     ],
   },
   {
@@ -30,9 +30,9 @@ export const projects: Project[] = [
     stack: "Django · Next.js · MUI · Tailwind",
     featured: true,
     story: [
-      "Company-wide internal portal replacing a Metabase-based dashboarding setup, centralising device operations, command tooling and engineering workflows.",
-      "Supports large-scale IoT fleet operations: company-wide device updates and remote command execution across thousands of deployed units.",
-      "Built with Django, Next.js, MUI and Tailwind.",
+      { type: "text", text: "Company-wide internal portal replacing a Metabase-based dashboarding setup, centralising device operations, command tooling and engineering workflows." },
+      { type: "text", text: "Supports large-scale IoT fleet operations: company-wide device updates and remote command execution across thousands of deployed units." },
+      { type: "text", text: "Built with Django, Next.js, MUI and Tailwind." },
     ],
   },
   {
@@ -47,9 +47,9 @@ export const projects: Project[] = [
     stack: "Django · Flutter · OCR/LLM · PostgreSQL",
     featured: false,
     story: [
-      "Greenfield replacement for an accounting firm's legacy software, serving ~25 employees and 500+ end customers.",
-      "Backend platform, a Flutter receipt-submission app for customers and an OCR microservice for automated document intake.",
-      "Delivered through Caonyx with Django, Flutter and PostgreSQL.",
+      { type: "text", text: "Greenfield replacement for an accounting firm's legacy software, serving ~25 employees and 500+ end customers." },
+      { type: "text", text: "Backend platform, a Flutter receipt-submission app for customers and an OCR microservice for automated document intake." },
+      { type: "text", text: "Delivered through Caonyx with Django, Flutter and PostgreSQL." },
     ],
   },
   {
@@ -64,9 +64,9 @@ export const projects: Project[] = [
     stack: "Django · Flutter · Product strategy",
     featured: true,
     story: [
-      "Gamified financial-literacy product for young learners, co-founded as a startup.",
-      "Secured €20k in funding, office space and mentoring via the Bank of Cyprus IDEA programme.",
-      "Built with Django and Flutter; equal parts product strategy and engineering.",
+      { type: "text", text: "Gamified financial-literacy product for young learners, co-founded as a startup." },
+      { type: "text", text: "Secured €20k in funding, office space and mentoring via the Bank of Cyprus IDEA programme." },
+      { type: "text", text: "Built with Django and Flutter; equal parts product strategy and engineering." },
     ],
   },
   {
@@ -81,9 +81,9 @@ export const projects: Project[] = [
     stack: "Django/DRF · Kubernetes · Tilt · Rancher",
     featured: false,
     story: [
-      "Marketing and personalisation platform delivering recommendations and campaigns across multiple organisations.",
-      "Multi-channel campaign delivery across WhatsApp, Viber, email and push: audience selection, delivery rules, silent hours and user eligibility.",
-      "Kubernetes-based microservice architecture with Django/DRF, Tilt, Rancher and Longhorn.",
+      { type: "text", text: "Marketing and personalisation platform delivering recommendations and campaigns across multiple organisations." },
+      { type: "text", text: "Multi-channel campaign delivery across WhatsApp, Viber, email and push: audience selection, delivery rules, silent hours and user eligibility." },
+      { type: "text", text: "Kubernetes-based microservice architecture with Django/DRF, Tilt, Rancher and Longhorn." },
     ],
   },
   {
@@ -98,9 +98,9 @@ export const projects: Project[] = [
     stack: "Python · YOLO · RTMP · ML pipelines",
     featured: false,
     story: [
-      "Drone-based remote health support and disaster response platform for locating people in inaccessible or high-risk environments.",
-      "DJI drone video streaming integrated with backend processing and a fine-tuned YOLO model detecting people in atypical positions.",
-      "Optimised RTMP drone-to-server pipeline enabling near real-time video processing.",
+      { type: "text", text: "Drone-based remote health support and disaster response platform for locating people in inaccessible or high-risk environments." },
+      { type: "text", text: "DJI drone video streaming integrated with backend processing and a fine-tuned YOLO model detecting people in atypical positions." },
+      { type: "text", text: "Optimised RTMP drone-to-server pipeline enabling near real-time video processing." },
     ],
   },
   {

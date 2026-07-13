@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import type { StoryBlock } from "@/content/types";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
@@ -15,7 +16,7 @@ export type ProjectInput = {
   featured: boolean;
   span_full: boolean;
   url: string | null;
-  story: string[];
+  story: StoryBlock[];
   display_order: number;
   active: boolean;
 };

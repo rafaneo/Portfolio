@@ -15,6 +15,7 @@ import {
   saveProject,
   type ProjectInput,
 } from "@/app/admin/(dashboard)/projects/actions";
+import { StoryBlocksEditor } from "@/components/admin/story-blocks-editor";
 import type { ProjectRow } from "@/lib/supabase/types";
 
 export function ProjectForm({ project }: { project?: ProjectRow }) {
@@ -32,9 +33,6 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
     display_order: project?.display_order ?? 0,
     active: project?.active ?? true,
   });
-  // Raw textarea text; parsed into paragraphs only on submit so Enter
-  // isn't swallowed by re-normalization while typing.
-  const [storyText, setStoryText] = useState((project?.story ?? []).join("\n"));
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
 
@@ -46,10 +44,7 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
     setError("");
     startTransition(async () => {
       try {
-        await saveProject(project?.id ?? null, {
-          ...form,
-          story: storyText.split("\n").filter((line) => line.trim()),
-        });
+        await saveProject(project?.id ?? null, form);
       } catch (err) {
         if (err instanceof Error && !err.message.includes("NEXT_REDIRECT")) {
           setError(err.message);
@@ -118,16 +113,6 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
               onChange={(e) => set("display_order", Number(e.target.value))}
             />
           </Field>
-          <Field
-            label="POP-UP STORY (one paragraph per line)"
-            className="md:col-span-2"
-          >
-            <TextArea
-              rows={6}
-              value={storyText}
-              onChange={(e) => setStoryText(e.target.value)}
-            />
-          </Field>
         </div>
         <div className="mt-5 flex flex-wrap gap-6">
           <Checkbox
@@ -146,6 +131,14 @@ export function ProjectForm({ project }: { project?: ProjectRow }) {
             onChange={(v) => set("active", v)}
           />
         </div>
+      </AdminCard>
+
+      <AdminCard title="POP-UP STORY (TEXT · IMAGE · LINK BLOCKS)">
+        <StoryBlocksEditor
+          value={form.story}
+          onChange={(story) => setForm((f) => ({ ...f, story }))}
+          imageFolder="projects"
+        />
       </AdminCard>
 
       {error && <p className="font-mono text-[11px] text-[#c0392b]">{error}</p>}

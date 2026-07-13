@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { StoryBlocksBody, StoryLinks } from "@/components/story-blocks";
 import type { Project } from "@/content/types";
 
 /**
@@ -17,7 +18,9 @@ export function ProjectPaper({
   onClose: () => void;
 }) {
   const index = items.findIndex((p) => p.id === project.id) + 1;
-  const paragraphs = project.story ?? [project.description];
+  const blocks = project.story ?? [
+    { type: "text" as const, text: project.description },
+  ];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -63,14 +66,13 @@ export function ProjectPaper({
           </div>
           <div className="ruled mt-7 px-10 pb-[28px] md:px-14">
             <div className="flex flex-col gap-[28px]">
-              {paragraphs.map((text) => (
-                <p key={text} className="text-[15px] leading-[28px] text-body">
-                  {text}
-                </p>
-              ))}
-              <div className="font-mono text-[11px] leading-[28px] text-muted">
-                {project.stack}
-              </div>
+              <StoryBlocksBody blocks={blocks} fallbackAlt={project.title} />
+              {project.stack && (
+                <div className="font-mono text-[11px] leading-[28px] text-muted">
+                  {project.stack}
+                </div>
+              )}
+              <StoryLinks blocks={blocks} />
             </div>
           </div>
         </div>

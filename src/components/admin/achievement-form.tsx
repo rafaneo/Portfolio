@@ -15,8 +15,7 @@ import {
   TextArea,
   TextInput,
 } from "@/components/admin/form";
-import { ImageUpload } from "@/components/admin/image-upload";
-import type { AchievementBlock } from "@/content/types";
+import { StoryBlocksEditor } from "@/components/admin/story-blocks-editor";
 import type { AchievementRow } from "@/lib/supabase/types";
 
 export function AchievementForm({
@@ -34,21 +33,6 @@ export function AchievementForm({
   });
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
-
-  const setBlock = (i: number, block: AchievementBlock) =>
-    setForm((f) => ({
-      ...f,
-      story: f.story.map((b, j) => (j === i ? block : b)),
-    }));
-
-  const moveBlock = (i: number, dir: -1 | 1) =>
-    setForm((f) => {
-      const story = [...f.story];
-      const j = i + dir;
-      if (j < 0 || j >= story.length) return f;
-      [story[i], story[j]] = [story[j], story[i]];
-      return { ...f, story };
-    });
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,98 +91,12 @@ export function AchievementForm({
         </div>
       </AdminCard>
 
-      <AdminCard title="PAPER STORY (TEXT + IMAGE BLOCKS)">
-        <div className="flex flex-col gap-4">
-          {form.story.map((block, i) => (
-            <div key={i} className="border border-line bg-paper p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold text-accent">
-                  {block.type.toUpperCase()} BLOCK {i + 1}
-                </span>
-                <span className="flex gap-3 font-mono text-[11px]">
-                  <button
-                    type="button"
-                    onClick={() => moveBlock(i, -1)}
-                    className="cursor-pointer text-muted hover:text-ink"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => moveBlock(i, 1)}
-                    className="cursor-pointer text-muted hover:text-ink"
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setForm((f) => ({
-                        ...f,
-                        story: f.story.filter((_, j) => j !== i),
-                      }))
-                    }
-                    className="cursor-pointer text-muted hover:text-[#c0392b]"
-                  >
-                    REMOVE
-                  </button>
-                </span>
-              </div>
-              {block.type === "text" ? (
-                <TextArea
-                  rows={3}
-                  value={block.text}
-                  onChange={(e) =>
-                    setBlock(i, { type: "text", text: e.target.value })
-                  }
-                />
-              ) : (
-                <div className="flex flex-col gap-2">
-                  <ImageUpload
-                    value={block.src ?? ""}
-                    onChange={(src) =>
-                      setBlock(i, { ...block, src: src || undefined })
-                    }
-                    folder="achievements"
-                  />
-                  <TextInput
-                    placeholder="Caption"
-                    value={block.caption ?? ""}
-                    onChange={(e) =>
-                      setBlock(i, { ...block, caption: e.target.value })
-                    }
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 flex gap-3">
-          <button
-            type="button"
-            onClick={() =>
-              setForm((f) => ({
-                ...f,
-                story: [...f.story, { type: "text", text: "" }],
-              }))
-            }
-            className="cursor-pointer border border-ink px-4 py-2 font-mono text-[11px] font-bold hover:border-accent hover:text-accent"
-          >
-            ADD TEXT +
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              setForm((f) => ({
-                ...f,
-                story: [...f.story, { type: "image", caption: "" }],
-              }))
-            }
-            className="cursor-pointer border border-ink px-4 py-2 font-mono text-[11px] font-bold hover:border-accent hover:text-accent"
-          >
-            ADD IMAGE +
-          </button>
-        </div>
+      <AdminCard title="PAPER STORY (TEXT · IMAGE · LINK BLOCKS)">
+        <StoryBlocksEditor
+          value={form.story}
+          onChange={(story) => setForm((f) => ({ ...f, story }))}
+          imageFolder="achievements"
+        />
       </AdminCard>
 
       {error && <p className="font-mono text-[11px] text-[#c0392b]">{error}</p>}

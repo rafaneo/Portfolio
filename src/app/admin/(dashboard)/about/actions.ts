@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { AchievementBlock } from "@/content/types";
+import type { StoryBlock } from "@/content/types";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
@@ -18,7 +18,7 @@ export type AchievementInput = {
   title: string;
   badge: string;
   summary: string;
-  story: AchievementBlock[];
+  story: StoryBlock[];
   display_order: number;
   active: boolean;
 };
