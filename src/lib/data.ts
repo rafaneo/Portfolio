@@ -45,7 +45,11 @@ export const getProfile = cache(async (): Promise<Profile> => {
     .eq("id", "default")
     .single();
   const profile = data?.profile as Profile | undefined;
-  return profile && Object.keys(profile).length > 0 ? profile : staticProfile;
+  // Merge over the static profile so fields added after the row was last
+  // saved still get their defaults.
+  return profile && Object.keys(profile).length > 0
+    ? { ...staticProfile, ...profile }
+    : staticProfile;
 });
 
 export const getRoles = cache(async (): Promise<ExperienceRole[]> => {

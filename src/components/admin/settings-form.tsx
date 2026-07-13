@@ -10,7 +10,12 @@ import {
   TextArea,
   TextInput,
 } from "@/components/admin/form";
-import type { ContactChannel, Profile, TerminalLine } from "@/content/types";
+import type {
+  ContactChannel,
+  CubeFace,
+  Profile,
+  TerminalLine,
+} from "@/content/types";
 import { createClient } from "@/lib/supabase/client";
 
 export function SettingsForm({ initial }: { initial: Profile }) {
@@ -20,6 +25,11 @@ export function SettingsForm({ initial }: { initial: Profile }) {
   const [introText, setIntroText] = useState(initial.aboutIntro.join("\n"));
   const [terminalText, setTerminalText] = useState(
     initial.terminal.map((l) => `${l.cmd} | ${l.out}`).join("\n")
+  );
+  const [cubeText, setCubeText] = useState(
+    (initial.cubeFaces ?? [])
+      .map((f) => `${f.label} | ${f.href}`)
+      .join("\n")
   );
   const [channelsText, setChannelsText] = useState(
     initial.channels
@@ -71,6 +81,14 @@ export function SettingsForm({ initial }: { initial: Profile }) {
         .map((line): TerminalLine => {
           const [cmd = "", out = ""] = line.split("|").map((s) => s.trim());
           return { cmd, out };
+        }),
+      cubeFaces: cubeText
+        .split("\n")
+        .filter((line) => line.trim())
+        .slice(0, 6)
+        .map((line): CubeFace => {
+          const [label = "", href = ""] = line.split("|").map((s) => s.trim());
+          return { label, href };
         }),
       channels: channelsText
         .split("\n")
@@ -194,6 +212,18 @@ export function SettingsForm({ initial }: { initial: Profile }) {
           value={introText}
           onChange={(e) => setIntroText(e.target.value)}
         />
+      </AdminCard>
+
+      <AdminCard title="HERO CUBE FACES (LABEL | URL, ONE PER LINE, MAX 6)">
+        <TextArea
+          rows={6}
+          value={cubeText}
+          onChange={(e) => setCubeText(e.target.value)}
+        />
+        <p className="mt-2 font-mono text-[10px] text-muted">
+          ORDER: FRONT · BACK · RIGHT · LEFT · TOP · BOTTOM. HTTP(S) URLS OPEN
+          IN A NEW TAB.
+        </p>
       </AdminCard>
 
       <AdminCard title="TERMINAL CARD (CMD | OUTPUT, ONE PER LINE)">

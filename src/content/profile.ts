@@ -36,6 +36,14 @@ export const profile: Profile = {
     { cmd: "locale", out: "el_CY · en_GB" },
     // { cmd: "ls ~/companies", out: "intermodal-telematics/  caonyx/" },
   ],
+  cubeFaces: [
+    { label: "ABOUT", href: "/about" },
+    { label: "PROJECTS", href: "/projects" },
+    { label: "EXPERIENCE", href: "/experience" },
+    { label: "WRITING", href: "/writing" },
+    { label: "CONTACT", href: "/contact" },
+    { label: "GITHUB", href: "https://github.com/rafaneo" },
+  ],
   channels: [
     {
       key: "github",

@@ -58,7 +58,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="hidden md:block">
-          <WireframeCube size={150} height={300} />
+          <WireframeCube size={150} height={300} faces={profile.cubeFaces} />
         </div>
       </Container>
 

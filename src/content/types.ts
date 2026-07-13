@@ -27,6 +27,8 @@ export type Profile = {
   atAGlance: { label: string; value: string }[];
   terminal: TerminalLine[];
   channels: ContactChannel[];
+  /** The six faces of the hero cube, front/back/right/left/top/bottom. */
+  cubeFaces?: CubeFace[];
 };
 
 export type ExperienceRole = {
@@ -73,6 +75,11 @@ export type RadarAxis = {
 export type TerminalLine = {
   cmd: string;
   out: string;
+};
+
+export type CubeFace = {
+  label: string;
+  href: string;
 };
 
 export type StoryBlock =

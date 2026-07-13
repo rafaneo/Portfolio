@@ -30,7 +30,7 @@ export default async function ContactPage() {
           </a>
         </div>
         <div className="hidden md:block">
-          <WireframeCube size={96} height={200} />
+          <WireframeCube size={96} height={200} faces={profile.cubeFaces} />
         </div>
       </Container>
 

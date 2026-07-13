@@ -13,7 +13,7 @@ export default async function AdminSettingsPage() {
 
   const profile =
     data?.profile && Object.keys(data.profile).length > 0
-      ? (data.profile as Profile)
+      ? { ...staticProfile, ...(data.profile as Profile) }
       : staticProfile;
 
   return (

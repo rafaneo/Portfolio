@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import type { CubeFace } from "@/content/types";
 import { cn } from "@/lib/utils";
 
 const SPIN_DEG_PER_SEC = 360 / 14;
@@ -9,27 +10,25 @@ const BASE_TILT_X = -20;
 const DRAG_SENSITIVITY = 0.45;
 const CLICK_DRAG_THRESHOLD = 8;
 
-type Face = {
-  rot: string;
-  href: string;
-  label: string;
-  external?: boolean;
-};
-
 // Every face is rotated so its front surface points outward – labels always
 // read left-to-right when their face turns toward the viewer.
-const FACES: Face[] = [
-  { rot: "", href: "/about", label: "ABOUT" },
-  { rot: "rotateY(180deg) ", href: "/projects", label: "PROJECTS" },
-  { rot: "rotateY(90deg) ", href: "/experience", label: "EXPERIENCE" },
-  { rot: "rotateY(-90deg) ", href: "/writing", label: "WRITING" },
-  { rot: "rotateX(90deg) ", href: "/contact", label: "CONTACT" },
-  {
-    rot: "rotateX(-90deg) ",
-    href: "https://github.com/rafaneo",
-    label: "GITHUB",
-    external: true,
-  },
+// Order: front, back, right, left, top, bottom.
+const ORIENTATIONS = [
+  "",
+  "rotateY(180deg) ",
+  "rotateY(90deg) ",
+  "rotateY(-90deg) ",
+  "rotateX(90deg) ",
+  "rotateX(-90deg) ",
+];
+
+const DEFAULT_FACES: CubeFace[] = [
+  { label: "ABOUT", href: "/about" },
+  { label: "PROJECTS", href: "/projects" },
+  { label: "EXPERIENCE", href: "/experience" },
+  { label: "WRITING", href: "/writing" },
+  { label: "CONTACT", href: "/contact" },
+  { label: "GITHUB", href: "https://github.com/rafaneo" },
 ];
 
 /**
@@ -42,10 +41,14 @@ const FACES: Face[] = [
 export function WireframeCube({
   size = 150,
   height,
+  faces,
 }: {
   size?: number;
   height?: number;
+  /** Up to six {label, href} faces (front/back/right/left/top/bottom). */
+  faces?: CubeFace[];
 }) {
+  const faceData = faces?.length ? faces.slice(0, 6) : DEFAULT_FACES;
   const wrapRef = useRef<HTMLDivElement>(null);
   const cubeRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
@@ -164,16 +167,21 @@ export function WireframeCube({
           transform: `rotateX(${BASE_TILT_X}deg)`,
         }}
       >
-        {FACES.map((face) => {
+        {ORIENTATIONS.map((rot, i) => {
+          const face = faceData[i];
           const style: React.CSSProperties = {
-            transform: `${face.rot}translateZ(${half + explode}px)`,
+            transform: `${rot}translateZ(${half + explode}px)`,
           };
           const className = cn(
             "absolute inset-0 flex items-center justify-center",
             "border-[1.5px] border-accent bg-accent/5",
             "transition-[transform,background-color] duration-500 ease-out",
-            "hover:bg-accent/15"
+            face && "hover:bg-accent/15"
           );
+          if (!face || !face.href) {
+            return <div key={i} className={className} style={style} />;
+          }
+          const external = face.href.startsWith("http");
           const label = (
             <span
               className={cn(
@@ -186,9 +194,9 @@ export function WireframeCube({
               {face.label}
             </span>
           );
-          return face.external ? (
+          return external ? (
             <a
-              key={face.label}
+              key={i}
               href={face.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -201,7 +209,7 @@ export function WireframeCube({
             </a>
           ) : (
             <Link
-              key={face.label}
+              key={i}
               href={face.href}
               draggable={false}
               onClick={onFaceClick}
