@@ -109,4 +109,6 @@ export type Post = {
   excerpt: string;
   content: string;
   publishedAt: string;
+  tags: string[];
+  thumbnailUrl?: string;
 };

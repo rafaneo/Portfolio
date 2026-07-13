@@ -145,6 +145,12 @@ body {
   background: none;
   padding: 0;
 }
+.post-content img {
+  border: 1px solid var(--color-line);
+  display: block;
+  margin: 1.4em 0;
+  max-width: 100%;
+}
 
 /* Ruled-paper background: one hairline every 28px. Pair with text set at
    leading-[28px] and block gaps in 28px multiples so copy sits on the lines. */

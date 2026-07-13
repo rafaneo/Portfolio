@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
+import { WritingList } from "@/components/writing-list";
 import { getPosts, getProfile } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default async function WritingPage() {
               FIRST POST COMING SOON
             </div>
             <p className="mx-auto mt-2.5 max-w-[440px] text-sm leading-relaxed text-muted">
-              In the meantime you can find my activity on {" "}
+              In the meantime you can find my activity on{" "}
               <a
                 href={profile.github}
                 target="_blank"
@@ -39,31 +39,7 @@ export default async function WritingPage() {
             </p>
           </div>
         ) : (
-          <div className="grid gap-px border border-line bg-line">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/writing/${post.slug}`}
-                className="group bg-white p-7"
-              >
-                <div className="mb-3 font-mono text-[11px] text-accent">
-                  {new Date(post.publishedAt)
-                    .toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })
-                    .toUpperCase()}
-                </div>
-                <h2 className="text-xl font-semibold group-hover:text-accent md:text-[22px]">
-                  {post.title}
-                </h2>
-                <p className="mt-2 max-w-[640px] text-sm leading-relaxed text-body">
-                  {post.excerpt}
-                </p>
-              </Link>
-            ))}
-          </div>
+          <WritingList posts={posts} />
         )}
       </Container>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
 import { SiteFooter } from "@/components/site-footer";
@@ -32,17 +33,33 @@ export default async function PostPage({ params }: Params) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <Container className="py-14 md:py-16">
-        <div className="mb-4 font-mono text-xs text-accent">
-          WRITING – {dateLabel}
+      <Container className="grid items-center gap-8 py-14 md:grid-cols-[1fr_auto] md:py-16">
+        <div>
+          <div className="mb-4 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
+            <span className="text-accent">WRITING – {dateLabel}</span>
+            {post.tags.map((tag) => (
+              <span key={tag} className="uppercase text-muted">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h1 className="max-w-[820px] text-4xl font-bold uppercase leading-none tracking-[-0.03em] md:text-6xl">
+            {post.title}
+          </h1>
+          {post.excerpt && (
+            <p className="mt-[18px] max-w-[600px] text-[15px] leading-relaxed text-body">
+              {post.excerpt}
+            </p>
+          )}
         </div>
-        <h1 className="max-w-[820px] text-4xl font-bold uppercase leading-none tracking-[-0.03em] md:text-6xl">
-          {post.title}
-        </h1>
-        {post.excerpt && (
-          <p className="mt-[18px] max-w-[600px] text-[15px] leading-relaxed text-body">
-            {post.excerpt}
-          </p>
+        {post.thumbnailUrl && (
+          <Image
+            src={post.thumbnailUrl}
+            alt=""
+            width={480}
+            height={320}
+            className="hidden max-h-52 w-auto border border-line object-cover md:block"
+          />
         )}
       </Container>
 

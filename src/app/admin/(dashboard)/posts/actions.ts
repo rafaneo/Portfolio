@@ -13,6 +13,10 @@ export type PostInput = {
   excerpt: string;
   content: string;
   status: "draft" | "published";
+  tags: string[];
+  cover_image_url: string | null;
+  /** ISO date. Empty = automatic (stamped when first published). */
+  published_at: string | null;
 };
 
 function revalidateSite() {
@@ -30,6 +34,10 @@ export async function savePost(id: string | null, input: PostInput) {
     excerpt: input.excerpt.trim(),
     content: sanitizeRichText(input.content),
     status: input.status,
+    tags: input.tags.map((t) => t.trim()).filter(Boolean),
+    cover_image_url: input.cover_image_url,
+    // Null lets the DB trigger stamp it on first publish.
+    published_at: input.published_at,
   };
   if (!payload.slug) throw new Error("Slug is required");
 

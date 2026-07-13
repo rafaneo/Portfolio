@@ -40,6 +40,7 @@ export type PostRow = {
   excerpt: string;
   content: string;
   cover_image_url: string | null;
+  tags: string[];
   status: "draft" | "published";
   published_at: string | null;
   created_at: string;

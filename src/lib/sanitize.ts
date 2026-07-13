@@ -24,12 +24,15 @@ export function sanitizeRichText(dirty: string): string {
       "blockquote",
       "code",
       "pre",
+      "img",
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
+      img: ["src", "alt"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
-    allowedSchemesAppliedToAttributes: ["href"],
+    allowedSchemesByTag: { img: ["https"] },
+    allowedSchemesAppliedToAttributes: ["href", "src"],
     transformTags: {
       a: sanitizeHtml.simpleTransform("a", {
         rel: "noopener noreferrer",

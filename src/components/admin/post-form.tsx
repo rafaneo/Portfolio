@@ -10,6 +10,7 @@ import {
   TextArea,
   TextInput,
 } from "@/components/admin/form";
+import { ImageUpload } from "@/components/admin/image-upload";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import {
   deletePost,
@@ -26,7 +27,11 @@ export function PostForm({ post }: { post?: PostRow }) {
     excerpt: post?.excerpt ?? "",
     content: post?.content ?? "",
     status: post?.status ?? "draft",
+    tags: post?.tags ?? [],
+    cover_image_url: post?.cover_image_url ?? null,
+    published_at: post?.published_at ?? null,
   });
+  const [tagsText, setTagsText] = useState((post?.tags ?? []).join(", "));
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
 
@@ -38,7 +43,10 @@ export function PostForm({ post }: { post?: PostRow }) {
     setError("");
     startTransition(async () => {
       try {
-        await savePost(post?.id ?? null, form);
+        await savePost(post?.id ?? null, {
+          ...form,
+          tags: tagsText.split(",").map((t) => t.trim()).filter(Boolean),
+        });
       } catch (err) {
         if (err instanceof Error && !err.message.includes("NEXT_REDIRECT")) {
           setError(err.message);
@@ -78,6 +86,37 @@ export function PostForm({ post }: { post?: PostRow }) {
               rows={2}
               value={form.excerpt}
               onChange={(e) => set("excerpt", e.target.value)}
+            />
+          </Field>
+          <Field label="TAGS (comma separated)">
+            <TextInput
+              value={tagsText}
+              onChange={(e) => setTagsText(e.target.value)}
+              placeholder="backend, delivery, next.js"
+            />
+          </Field>
+          <Field label="PUBLISH DATE (empty = automatic on publish)">
+            <TextInput
+              type="date"
+              value={form.published_at ? form.published_at.slice(0, 10) : ""}
+              onChange={(e) =>
+                set(
+                  "published_at",
+                  e.target.value
+                    ? new Date(e.target.value + "T12:00:00Z").toISOString()
+                    : null
+                )
+              }
+            />
+          </Field>
+          <Field
+            label="THUMBNAIL (writing list + post header)"
+            className="md:col-span-2"
+          >
+            <ImageUpload
+              value={form.cover_image_url ?? ""}
+              onChange={(url) => set("cover_image_url", url || null)}
+              folder="posts"
             />
           </Field>
         </div>

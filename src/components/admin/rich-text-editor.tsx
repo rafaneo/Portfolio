@@ -4,7 +4,9 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useEffect } from "react";
+import ImageExtension from "@tiptap/extension-image";
+import { useEffect, useRef, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -43,6 +45,8 @@ function Btn({
 }
 
 export function RichTextEditor({ value, onChange, placeholder }: Props) {
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -55,6 +59,7 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
         autolink: true,
         HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" },
       }),
+      ImageExtension,
     ],
     content: value || "",
     editorProps: {
@@ -78,6 +83,30 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
   if (!editor) {
     return <div className="min-h-[300px] border border-line bg-white" />;
   }
+
+  const uploadImage = async (file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Max 5MB per image.");
+      return;
+    }
+    setUploading(true);
+    try {
+      const supabase = createClient();
+      const ext = file.name.split(".").pop() ?? "jpg";
+      const path = `posts/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage
+        .from("site-assets")
+        .upload(path, file, { cacheControl: "31536000" });
+      if (error) throw error;
+      const { data } = supabase.storage.from("site-assets").getPublicUrl(path);
+      editor.chain().focus().setImage({ src: data.publicUrl }).run();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const setLink = () => {
     const previous = editor.getAttributes("link").href as string | undefined;
@@ -157,6 +186,11 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
           onClick={setLink}
         />
         <Btn
+          title="Insert image"
+          label={uploading ? "UPLOADING…" : "IMAGE"}
+          onClick={() => imageInputRef.current?.click()}
+        />
+        <Btn
           title="Clear formatting"
           label="✕"
           onClick={() =>
@@ -164,6 +198,17 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
           }
         />
       </div>
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        hidden
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) uploadImage(file);
+          e.target.value = "";
+        }}
+      />
       <EditorContent editor={editor} />
     </div>
   );

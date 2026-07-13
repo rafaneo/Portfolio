@@ -184,6 +184,8 @@ function mapPost(row: PostRow): Post {
     excerpt: row.excerpt,
     content: row.content,
     publishedAt: row.published_at ?? row.created_at,
+    tags: row.tags ?? [],
+    thumbnailUrl: row.cover_image_url ?? undefined,
   };
 }
 
