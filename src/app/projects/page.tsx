@@ -16,9 +16,7 @@ export default async function ProjectsPage() {
   return (
     <main className="flex-1">
       <Container className="py-14 pb-10 md:py-16">
-        <PageHeader kicker="PROJECTS" title="Selected work">
-          Platforms and products I&apos;ve architected, built or led.
-        </PageHeader>
+        <PageHeader kicker="" title="Selected work"></PageHeader>
       </Container>
 
       <Container className="pb-14">

@@ -16,10 +16,7 @@ export default async function WritingPage() {
   return (
     <main className="flex flex-1 flex-col">
       <Container className="py-14 pb-10 md:py-16">
-        <PageHeader kicker="WRITING" title="Notes & writing">
-          Occasional notes on backend architecture, delivery and building
-          products end-to-end.
-        </PageHeader>
+        <PageHeader kicker="" title="BLOG"></PageHeader>
       </Container>
 
       <Container className="flex-1 pb-16">

@@ -34,7 +34,7 @@ export default async function AboutPage() {
       {/* HEADER + INTRO */}
       <Container className="grid gap-12 py-14 md:grid-cols-[1fr_360px] md:py-16">
         <div>
-          <PageHeader kicker="02 – ABOUT" title="About me" />
+          <PageHeader kicker="" title="About me" />
           <div className="mt-6 flex max-w-[620px] flex-col gap-4 text-base leading-[1.7] text-body">
             {profile.aboutIntro.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>

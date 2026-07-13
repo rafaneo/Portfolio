@@ -18,10 +18,7 @@ export default async function ContactPage() {
       {/* HERO */}
       <Container className="grid items-center gap-8 py-14 md:grid-cols-[1fr_240px] md:py-[72px]">
         <div>
-          <PageHeader kicker="08 – CONTACT" title="Let's talk">
-            Open to interesting engineering problems, collaborations and
-            conversations. The fastest way to reach me is email.
-          </PageHeader>
+          <PageHeader kicker="" title="Let's talk"></PageHeader>
           <a
             href={`mailto:${profile.email}`}
             className="mt-[30px] inline-block bg-ink px-7 py-4 font-mono text-sm font-bold text-paper transition-colors hover:bg-accent"
