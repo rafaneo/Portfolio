@@ -9,13 +9,8 @@ export async function SiteFooter({
 
   if (variant === "colophon") {
     return (
-      <footer className="grid grid-cols-1 border-t border-line font-mono text-xs text-muted sm:grid-cols-2">
-        <div className="border-b border-line px-6 py-[18px] sm:border-b-0 sm:border-r">
-          © 2026 {profile.name.toUpperCase()}
-        </div>
-        <div className="px-6 py-[18px] sm:text-right">
-          DESIGNED WITH A GRID AND ONE CUBE
-        </div>
+      <footer className="border-t border-line font-mono text-xs text-muted">
+        <div className="px-6 py-[18px]">© 2026 {profile.name.toUpperCase()}</div>
       </footer>
     );
   }
