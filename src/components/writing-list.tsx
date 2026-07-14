@@ -89,13 +89,15 @@ export function WritingList({ posts }: { posts: Post[] }) {
               )}
             </div>
             {post.thumbnailUrl && (
-              <Image
-                src={post.thumbnailUrl}
-                alt=""
-                width={640}
-                height={400}
-                className="hidden h-44 w-72 flex-none border border-line object-cover sm:block"
-              />
+              <div className="relative hidden w-72 flex-none self-stretch sm:block md:w-96">
+                <Image
+                  src={post.thumbnailUrl}
+                  alt=""
+                  fill
+                  sizes="384px"
+                  className="border border-line object-cover"
+                />
+              </div>
             )}
           </Link>
         ))}
