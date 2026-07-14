@@ -56,9 +56,9 @@ export default async function PostPage({ params }: Params) {
           <Image
             src={post.thumbnailUrl}
             alt=""
-            width={480}
-            height={320}
-            className="hidden max-h-52 w-auto border border-line object-cover md:block"
+            width={880}
+            height={660}
+            className="hidden max-h-80 w-auto max-w-[420px] border border-line object-cover md:block"
           />
         )}
       </Container>

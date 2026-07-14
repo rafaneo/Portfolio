@@ -92,9 +92,9 @@ export function WritingList({ posts }: { posts: Post[] }) {
               <Image
                 src={post.thumbnailUrl}
                 alt=""
-                width={320}
-                height={200}
-                className="hidden h-28 w-44 flex-none border border-line object-cover sm:block"
+                width={640}
+                height={400}
+                className="hidden h-44 w-72 flex-none border border-line object-cover sm:block"
               />
             )}
           </Link>
