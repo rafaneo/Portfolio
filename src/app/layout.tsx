@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, Space_Mono } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import { getProfile } from "@/lib/data";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -38,6 +39,7 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col">
         <SiteNav brand={profile.brand} />
         {children}
+        <Analytics />
       </body>
     </html>
   );
